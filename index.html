@@ -1,74 +1,78 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Love Quote of The Day 💌</title>
+  <title>Love Quote of the Day</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to right, #ffe0ec, #fff8f2);
-      color: #333;
+      background: #f9f2f8;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       height: 100vh;
       text-align: center;
-    }
-    .quote-box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      max-width: 90%;
+      padding: 20px;
     }
     .quote {
-      font-size: 1.6em;
-      font-style: italic;
-      line-height: 1.5;
+      font-size: 1.5em;
+      color: #b4005c;
+      max-width: 600px;
     }
-    .footer {
+    .date {
       margin-top: 20px;
-      font-size: 0.9em;
-      color: #888;
+      font-size: 1em;
+      color: #999;
     }
   </style>
 </head>
 <body>
-  <div class="quote-box">
-    <div class="quote" id="quote">Loading...</div>
-    <div class="footer">Lovequote dibuat dengan hati 💖</div>
-  </div>
+
+  <div class="quote" id="quote">Loading your love...</div>
+  <div class="date" id="date"></div>
 
   <script>
     const quotes = [
-      "Kamu itu luar biasa, dan jangan pernah lupa itu.",
-      "Kalau hari ini berat, ingat kamu gak harus kuat sendirian.",
-      "Aku bangga punya kamu, semangat ya! ❤️",
-      "Hari ini pasti bisa lebih baik, asal kamu tersenyum.",
-      "Satu langkah kecil hari ini bisa jadi awal kebahagiaan besar nanti.",
-      "Kamu sudah jauh, jauh lebih kuat dari kemarin.",
-      "Terima kasih karena terus bertahan, meskipun semuanya gak mudah.",
-      "Jangan lupa istirahat ya, kamu juga manusia, bukan mesin.",
-      "Gak semua orang bisa seperti kamu. Aku kagum.",
-      "Kalau kamu lupa cara bahagia, aku temani cari bareng-bareng.",
-      "Pelan-pelan aja, gak apa-apa. Aku tungguin sampai kamu siap.",
-      "Kamu boleh nangis, kamu boleh lelah, asal jangan nyerah.",
-      "Aku tahu kamu capek, tapi aku percaya kamu bisa lewati ini.",
-      "Semangat ya, hari ini bakal lebih baik dari kemarin.",
-      "Kalau kamu kehilangan arah, inget… ada aku di sini.",
-      "Aku di sini bukan cuma buat seneng-seneng, tapi juga nemenin kamu pas susah.",
-      "Kamu gak sendirian. Kamu berharga. Kamu dicintai.",
-      "Aku bangga punya kamu, bukan karena kamu sempurna, tapi karena kamu nyata.",
-      "Hari ini mungkin berantakan, tapi kamu tetap indah buat aku.",
-      "Kalau dunia gak peluk kamu, biar aku yang peluk lewat kata-kata ini."
+      "Kamu itu seperti kopi pagi, selalu bikin semangat.",
+      "Setiap hari bersamamu adalah hadiah.",
+      "Kamu gak perlu jadi sempurna, cukup jadi kamu yang aku sayang.",
+      "Jangan lupa istirahat ya, aku peduli kamu banget.",
+      "Hari ini berat? Genggam tanganku dalam doa.",
+      "Aku percaya kamu bisa, kayak aku percaya sama cinta kita.",
+      "Kalau capek, sandar aja di kata-kataku.",
+      "Hari ini indah karena kamu ada.",
+      "Jangan menyerah ya, ingat ada aku yang selalu dukung.",
+      "Cintaku kayak Termux — jalan di semua kondisi 😆",
+      "Jarak gak penting, yang penting hati kita saling nunggu.",
+      "Senyum kamu itu ibadah buat hatiku.",
+      "Kamu adalah jawaban dari doa-doa panjangku.",
+      "Hari ini, aku kirim pelukan lewat layar.",
+      "Cinta kita tuh simple tapi dalem, kayak kode HTML ini.",
+      "Semoga harimu semanis pikiranmu tentangku.",
+      "Aku gak butuh dunia... asal dunia itu kamu.",
+      "Kamu boleh lelah, tapi jangan lupa kamu berharga.",
+      "Kalau hari ini terasa berat, aku titip senyum buat kamu.",
+      "Di balik notifikasi, aku selalu ada.",
+      "Aku pengen jadi alasan kamu kuat hari ini.",
+      "Walau cuma halaman sederhana, tapi isinya cinta.",
+      "Hari ini aku bangga sama kamu.",
+      "Jangan lupa makan, karena kamu penting.",
+      "Cinta ini kayak script — auto jalan tiap hari.",
+      "Kalau kamu sedih, buka halaman ini lagi ya.",
+      "Aku kirim peluk dari sini... tiap hari.",
+      "Semangat ya, cintaku!",
+      "Jangan biarin satu hari pun kamu merasa sendiri.",
+      "Hari ini ada kamu, dan itu cukup buat bahagia."
     ];
 
     const now = new Date();
-    const index = now.getDate() % quotes.length;
-    document.getElementById("quote").innerText = quotes[index];
+    const day = now.getDate(); // 1 - 31
+    const quote = quotes[(day - 1) % quotes.length];
+
+    document.getElementById('quote').textContent = quote;
+    document.getElementById('date').textContent = now.toDateString();
   </script>
+
 </body>
 </html>
-
