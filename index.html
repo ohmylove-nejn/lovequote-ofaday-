@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Quote of The Day 💌</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ffe0ec, #fff8f2);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .quote-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 90%;
+    }
+    .quote {
+      font-size: 1.6em;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="quote-box">
+    <div class="quote" id="quote">Loading...</div>
+    <div class="footer">Lovequote dibuat dengan hati 💖</div>
+  </div>
+
+  <script>
+    const quotes = [
+      "Kamu itu luar biasa, dan jangan pernah lupa itu.",
+      "Kalau hari ini berat, ingat kamu gak harus kuat sendirian.",
+      "Aku bangga punya kamu, semangat ya! ❤️",
+      "Hari ini pasti bisa lebih baik, asal kamu tersenyum.",
+      "Satu langkah kecil hari ini bisa jadi awal kebahagiaan besar nanti.",
+      "Kamu sudah jauh, jauh lebih kuat dari kemarin.",
+      "Terima kasih karena terus bertahan, meskipun semuanya gak mudah.",
+      "Jangan lupa istirahat ya, kamu juga manusia, bukan mesin.",
+      "Gak semua orang bisa seperti kamu. Aku kagum.",
+      "Kalau kamu lupa cara bahagia, aku temani cari bareng-bareng.",
+      "Pelan-pelan aja, gak apa-apa. Aku tungguin sampai kamu siap.",
+      "Kamu boleh nangis, kamu boleh lelah, asal jangan nyerah.",
+      "Aku tahu kamu capek, tapi aku percaya kamu bisa lewati ini.",
+      "Semangat ya, hari ini bakal lebih baik dari kemarin.",
+      "Kalau kamu kehilangan arah, inget… ada aku di sini.",
+      "Aku di sini bukan cuma buat seneng-seneng, tapi juga nemenin kamu pas susah.",
+      "Kamu gak sendirian. Kamu berharga. Kamu dicintai.",
+      "Aku bangga punya kamu, bukan karena kamu sempurna, tapi karena kamu nyata.",
+      "Hari ini mungkin berantakan, tapi kamu tetap indah buat aku.",
+      "Kalau dunia gak peluk kamu, biar aku yang peluk lewat kata-kata ini."
+    ];
+
+    const now = new Date();
+    const index = now.getDate() % quotes.length;
+    document.getElementById("quote").innerText = quotes[index];
+  </script>
+</body>
+</html>
+
