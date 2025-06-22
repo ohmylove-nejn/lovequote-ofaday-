@@ -5,69 +5,90 @@
   <title>Love Quote of the Day</title>
   <style>
     body {
-      background: #f9f2f8;
-      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(145deg, #ffe6f0, #ffd6ec);
+      font-family: Helvetica, Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      text-align: center;
       padding: 20px;
+      text-align: center;
     }
-    .quote {
-      font-size: 1.5em;
-      color: #b4005c;
+
+    .bubble {
+      background-color: #fff0f6;
+      border-radius: 25px;
+      padding: 20px 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       max-width: 600px;
+      font-size: 1.4em;
+      color: #b4005c;
+      margin-bottom: 20px;
+      position: relative;
     }
+
+    .bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      margin-left: -10px;
+      border-width: 10px 10px 0;
+      border-style: solid;
+      border-color: #fff0f6 transparent transparent transparent;
+    }
+
     .date {
-      margin-top: 20px;
-      font-size: 1em;
-      color: #999;
+      font-size: 0.9em;
+      color: #884466;
     }
   </style>
 </head>
 <body>
 
-  <div class="quote" id="quote">Loading your love...</div>
+  <div class="bubble" id="quote">Loading quote...</div>
   <div class="date" id="date"></div>
 
   <script>
+    const panggilan = ["sayang", "cinta", "baby", "cantik", "semestaku"];
+    const nama = panggilan[Math.floor(Math.random() * panggilan.length)];
+
     const quotes = [
-      "Kamu itu seperti kopi pagi, selalu bikin semangat.",
-      "Setiap hari bersamamu adalah hadiah.",
-      "Kamu gak perlu jadi sempurna, cukup jadi kamu yang aku sayang.",
-      "Jangan lupa istirahat ya, aku peduli kamu banget.",
-      "Hari ini berat? Genggam tanganku dalam doa.",
-      "Aku percaya kamu bisa, kayak aku percaya sama cinta kita.",
-      "Kalau capek, sandar aja di kata-kataku.",
-      "Hari ini indah karena kamu ada.",
-      "Jangan menyerah ya, ingat ada aku yang selalu dukung.",
-      "Cintaku kayak Termux — jalan di semua kondisi 😆",
-      "Jarak gak penting, yang penting hati kita saling nunggu.",
-      "Senyum kamu itu ibadah buat hatiku.",
-      "Kamu adalah jawaban dari doa-doa panjangku.",
-      "Hari ini, aku kirim pelukan lewat layar.",
-      "Cinta kita tuh simple tapi dalem, kayak kode HTML ini.",
-      "Semoga harimu semanis pikiranmu tentangku.",
-      "Aku gak butuh dunia... asal dunia itu kamu.",
-      "Kamu boleh lelah, tapi jangan lupa kamu berharga.",
-      "Kalau hari ini terasa berat, aku titip senyum buat kamu.",
-      "Di balik notifikasi, aku selalu ada.",
-      "Aku pengen jadi alasan kamu kuat hari ini.",
-      "Walau cuma halaman sederhana, tapi isinya cinta.",
-      "Hari ini aku bangga sama kamu.",
-      "Jangan lupa makan, karena kamu penting.",
-      "Cinta ini kayak script — auto jalan tiap hari.",
-      "Kalau kamu sedih, buka halaman ini lagi ya.",
-      "Aku kirim peluk dari sini... tiap hari.",
-      "Semangat ya, cintaku!",
-      "Jangan biarin satu hari pun kamu merasa sendiri.",
-      "Hari ini ada kamu, dan itu cukup buat bahagia."
+      `Selamat kerja, ${nama}! Jangan lupa sarapan biar kuat, ya.`,
+      `Hari ini Senin, semangat kerja ya ${nama}! Aku support dari jauh 🫶`,
+      `Kalau capek di tengah jalan, inget ada aku yang nunggu kamu cerita.`,
+      `Semangat ya ${nama}, meskipun lembur, jangan terlalu dipaksain.`,
+      `Kalo udah masuk hari Rabu, itu tandanya kamu udah hebat sejauh ini.`,
+      `${nama}, kerjaan boleh numpuk tapi kamu gak sendirian kok.`,
+      `Jangan lupa minum air putih banyak hari ini ya ${nama}, please 😤🩷`,
+      `Kalo lagi mumet, istirahat bentar. Aku juga lagi mikirin kamu.`,
+      `Nggak apa-apa kalau hari ini berat, yang penting kamu udah coba.`,
+      `Aku percaya kamu bisa lewatin hari ini, kaya biasanya.`,
+      `Hari ini kamu gak sendirian, ${nama}. Aku support dari kejauhan 🙋‍♂️`,
+      `Minggu ini keras banget ya? Tapi kamu lebih kuat dari itu.`,
+      `Lembur lagi ${nama}? Jangan sampe lupa makan ya, aku marah lho 😠❤️`,
+      `Jangan kebanyakan mikir, fokus satu-satu aja. Pelan-pelan yaa.`,
+      `Aku tau kamu capek, tapi kamu keren banget bisa terus jalan.`,
+      `${nama}, semangat! Aku tunggu kabar kamu hari ini kayak biasa.`,
+      `Kalau hari ini bikin pengen nangis, gak apa-apa kok... boleh.`,
+      `Kamu boleh rehat bentar, dunia gak akan marah kok.`,
+      `Nggak semua orang bisa kuat kayak kamu, ${nama}. Aku bangga lho.`,
+      `Hari Jumat, semangat dikit lagi weekend meski Sabtu kerja lagi 😅`,
+      `Kalau kamu mulai ragu, inget kamu udah sejauh ini!`,
+      `Kadang gak harus sempurna, yang penting kamu terus nyoba.`,
+      `Satu hari lagi, ayo kita lewatin bareng walau dari jauh.`,
+      `Hari ini nggak harus hebat kok, cukup bertahan aja udah luar biasa.`,
+      `Kalo kamu sempet senyum hari ini, berarti aku berhasil nemenin kamu.`,
+      `Sabtu kerja emang nyebelin, tapi kamu selalu bisa handle semuanya.`,
+      `Satu hal yang pasti: aku selalu mikirin kamu tiap kamu kerja.`,
+      `Ga sabar pengen ketemu kamu, tapi sekarang aku dukung dari jauh dulu.`,
+      `Kalo kamu lagi diem, aku ngerti kok... capek ya ${nama}? Gak apa-apa.`,
+      `Hari Minggu nanti, kamu harus bener-bener istirahat ya. Titik.`
     ];
 
     const now = new Date();
-    const day = now.getDate(); // 1 - 31
+    const day = now.getDate();
     const quote = quotes[(day - 1) % quotes.length];
 
     document.getElementById('quote').textContent = quote;
@@ -76,3 +97,4 @@
 
 </body>
 </html>
+
