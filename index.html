@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+k<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lovequote Harian</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #ffd6eb, #ffc4e1, #ffeaf5, #ffccda);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #ffd6eb, #ffeaf5, #ffc4e1, #ffccda);
+      background-size: 600% 600%;
+      animation: gradientFlow 25s ease infinite;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -24,23 +24,24 @@
       color: #444;
     }
 
-    @keyframes gradientMove {
-      0%, 100% { background-position: 0% 50%; }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .bubble {
       background: rgba(255, 255, 255, 0.85);
-      border-radius: 30px;
-      padding: 30px 40px;
-      max-width: 80%;
-      font-size: 1.4rem;
+      border-radius: 25px;
+      padding: 25px 30px;
+      max-width: 85%;
+      font-size: 1.3rem;
       text-align: center;
-      box-shadow: 0 12px 28px rgba(255, 182, 193, 0.5);
+      box-shadow: 0 8px 25px rgba(255, 192, 203, 0.3);
       animation: fadeIn 1.5s ease forwards;
       opacity: 0;
-      backdrop-filter: blur(5px);
-      margin-top: 20px;
+      margin: 20px 0;
+      backdrop-filter: blur(4px);
     }
 
     @keyframes fadeIn {
@@ -48,111 +49,96 @@
     }
 
     .time {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #555;
+      font-size: 1.1rem;
+      font-weight: 600;
       margin-top: 20px;
+      color: #555;
     }
 
     .emoji {
       font-size: 1.8rem;
       position: absolute;
-      opacity: 0.8;
-      animation: float 6s infinite ease-in-out alternate;
+      opacity: 0.85;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(10px); }
-    }
+    .emoji1 { top: 20px; left: 20px; transform: rotate(-20deg); }
+    .emoji2 { top: 60px; right: 30px; transform: rotate(15deg); }
+    .emoji3 { bottom: 80px; left: 40px; transform: rotate(10deg); }
+    .emoji4 { bottom: 50px; right: 25px; transform: rotate(-15deg); }
+    .emoji5 { top: 150px; right: 90px; transform: rotate(30deg); }
+    .emoji6 { bottom: 140px; left: 80px; transform: rotate(-25deg); }
 
     .footer {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #666;
       position: absolute;
-      bottom: 12px;
+      bottom: 10px;
       text-align: center;
       font-style: italic;
     }
 
-    button {
-      margin-top: 15px;
-      background: #ff8fc4;
-      border: none;
-      border-radius: 20px;
-      padding: 8px 18px;
-      font-size: 1rem;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
-    }
-
-    button:hover {
-      background: #ff6aa9;
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <!-- Banyak emoji lucu -->
-  <div class="emoji" style="top: 20px; left: 15px;">💌</div>
-  <div class="emoji" style="top: 60px; right: 20px;">💕</div>
-  <div class="emoji" style="bottom: 70px; left: 25px;">🌸</div>
-  <div class="emoji" style="bottom: 40px; right: 35px;">💞</div>
-  <div class="emoji" style="top: 180px; right: 80px;">💖</div>
-  <div class="emoji" style="bottom: 130px; left: 80px;">🩷</div>
-  <div class="emoji" style="top: 250px; right: 50px;">🫶</div>
-  <div class="emoji" style="bottom: 200px; left: 40px;">💐</div>
+  <!-- EMOJIS -->
+  <div class="emoji emoji1">💌</div>
+  <div class="emoji emoji2">💕</div>
+  <div class="emoji emoji3">💖</div>
+  <div class="emoji emoji4">💘</div>
+  <div class="emoji emoji5">💝</div>
+  <div class="emoji emoji6">🌸</div>
 
-  <!-- Jam -->
+  <!-- JAM -->
   <div class="time" id="clock">00:00:00</div>
 
-  <!-- Bubble quote -->
+  <!-- QUOTE -->
   <div class="bubble" id="quote">Loading quote...</div>
 
-  <!-- Tombol play musik -->
-  <button onclick="playMusic()">Play Music 🎶</button>
-
-  <!-- Footer -->
+  <!-- FOOTER -->
   <div class="footer">made from love for the one I love 💌</div>
 
-  <!-- Musik -->
-  <audio id="bgmusic" loop autoplay>
-    <source src="https://sndup.net/pqkxw/d" type="audio/mpeg">
+  <!-- MUSIK -->
+  <audio autoplay loop id="bgmusic">
+    <source src="https://dl.sndup.net/qmw8/Dreamy%20Nights%20-%20Scandinavianz.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
+  <!-- SCRIPT -->
   <script>
     const quotes = [
-      "1. Hai baby! Awal bulan, semoga harinya semanis kamu 💖",
-      "2. Ga masalah kalau hari ini berat, aku selalu ada 💌",
-      "3. Jangan lupa makan siang ya cinta 🌸",
-      "4. Semangat lemburnya ya semestaku! 🩷",
-      "5. Kamu tuh hebat, walaupun suka lupa 🫶",
-      "6. Kalau cape, jangan ragu cerita ke aku ya 😘",
-      "7. Kangen? Sama. Tapi lebih kangen kamu bahagia 💕",
-      "8. Aku yakin kamu bisa hadapi apapun hari ini 🌷",
-      "9. Dikit lagi weekend baby, semangat 💞",
-      "10. Jangan stress, kamu udah ngelakuin yg terbaik 💗",
-      "11. Gaji emang penting, tapi kamu lebih penting 😍",
-      "12. Kalau bisa peluk kamu sekarang, aku pasti udah peluk 🐻",
-      "13. Hari ini cukup kamu tau aku mikirin kamu 💘",
-      "14. Semangat kerja sayang, aku tunggu kabar baik kamu 🌼",
-      "15. Kamu pusing? sini aku peluk lewat kata 🫂",
-      "16. Jangan lupa minum air putih ya semestaku 💧",
-      "17. Aku bangga kamu ga nyerah meski capek 💪",
-      "18. You deserve every love & every rest 💝",
-      "19. Hujan atau panas, kamu tetep bikin hati hangat 😚",
-      "20. Hari ini lebih indah karena kamu 💞",
-      "21. Ngerasa sendiri? Aku disini kok 🤍",
-      "22. Cuma mau bilang: I love u more everyday 💗",
-      "23. Lelahmu bukan sia-sia, ada aku yg hargai 😇",
-      "24. Jangan bandingin diri kamu sama orang lain yaa 💌",
-      "25. Lembur boleh, lupa aku jangan hihihi",
-      "26. Nanti ketemu ya? Aku sabar nungguinmu 😭",
-      "27. Hari ini cukup rebahan dan cinta dari aku 😴",
-      "28. Hari terakhir kerja minggu ini, semangaaatt 💥",
-      "29. Kamu itu rumah teraman buat aku 🏠",
-      "30. Kamu luar biasa, bahkan pas kamu ga nyadar 🥰"
+      "1. Hai cinta! Awal bulan, semoga semua urusan kamu lancar 💖",
+      "2. Jangan lupa senyum hari ini yaa sayang 🥰",
+      "3. Aku tau kamu lagi sibuk, tapi semoga kamu tetap bahagia 🫶",
+      "4. Kerja lembur ga gampang, tapi kamu hebat banget 😚",
+      "5. Kalau capek, tarik napas dulu, peluk bayangan aku 🤗",
+      "6. Dunia boleh berat, tapi kamu punya aku 😘",
+      "7. Weekend sebentar lagi, semangat semestaku 💞",
+      "8. Kamu layak dicintai tiap hari, termasuk hari ini 💗",
+      "9. Gausah khawatir, kamu nggak sendirian ❤️",
+      "10. Kalau bisa aku teleport, aku udah peluk kamu dari tadi 😭",
+      "11. Apa pun yang kamu kerjain hari ini, aku bangga banget 💘",
+      "12. Jangan takut gagal, aku selalu support kamu 💪",
+      "13. Hari ini kamu cakep banget di bayangan aku 💓",
+      "14. Love u more today than yesterday 😍",
+      "15. Kalau kamu lelah, kamu boleh sandarin dunia kamu ke aku 🥺",
+      "16. Setiap detik aku mikirin kamu, baby 🕊️",
+      "17. Semangat kerja cinta! Kamu keren banget 💥",
+      "18. Ga sabar ketemu dan cerita semua hari-hari kamu 💌",
+      "19. Mikirin kamu bikin aku semangat terus 💐",
+      "20. Kamu semestaku, kamu duniaku 🪐💖",
+      "21. Peluk dari jarak jauh tapi hati deket selalu 🫂",
+      "22. Semoga hari ini ada kabar baik buat kamu yaa 🥹",
+      "23. Aku di sini, nunggu kamu pulang cerita 🛋️",
+      "24. Kamu layak dapet bahagia sebesar langit 💫",
+      "25. Udah 25 hari kamu kerja keras, kamu luar biasa banget 💝",
+      "26. Hari ini indah karena kamu ada di pikiranku 🌈",
+      "27. Walau jarak jauh, cintaku deket banget 😘",
+      "28. Aku rindu, tapi aku juga percaya kamu pasti kuat 💪",
+      "29. Gausah jadi sempurna, cukup jadi kamu yg aku cinta 💕",
+      "30. Satu bulan penuh, kamu tetap hebat dan dicintai 💘"
     ];
 
     function updateTime() {
@@ -164,19 +150,20 @@
     }
 
     function updateQuote() {
-      const day = new Date().getDate();
-      const index = (day - 1) % quotes.length;
+      const today = new Date().getDate();
+      const index = (today - 1) % quotes.length;
       document.getElementById("quote").innerText = quotes[index];
     }
 
-    function playMusic() {
-      const audio = document.getElementById("bgmusic");
-      audio.play().catch(() => {});
-    }
-
+    // Initial update
     updateTime();
     updateQuote();
     setInterval(updateTime, 1000);
+
+    // Play music on click (some browsers need interaction)
+    window.addEventListener('click', () => {
+      document.getElementById('bgmusic').play().catch(() => {});
+    });
   </script>
 </body>
 </html>
