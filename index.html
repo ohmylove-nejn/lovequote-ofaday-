@@ -1,29 +1,177 @@
-k      "28. Hari terakhir kerja minggu ini, semangaaatt 💥",
-      "29. Kamu pantas dapet cinta yang tenang. Aku coba jadi itu.",
-      "30. Udah 30 hari kamu hebat terus. Aku bangga banget punya kamu 💞"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lovequote Harian</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #ffd6eb, #ffc4e1, #ffeaf5, #ffccda);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      color: #444;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .bubble {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 30px;
+      padding: 30px 40px;
+      max-width: 80%;
+      font-size: 1.4rem;
+      text-align: center;
+      box-shadow: 0 12px 28px rgba(255, 182, 193, 0.5);
+      animation: fadeIn 1.5s ease forwards;
+      opacity: 0;
+      backdrop-filter: blur(5px);
+      margin-top: 20px;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .time {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #555;
+      margin-top: 20px;
+    }
+
+    .emoji {
+      font-size: 1.8rem;
+      position: absolute;
+      opacity: 0.8;
+      animation: float 6s infinite ease-in-out alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(10px); }
+    }
+
+    .footer {
+      font-size: 0.75rem;
+      color: #666;
+      position: absolute;
+      bottom: 12px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    button {
+      margin-top: 15px;
+      background: #ff8fc4;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+    }
+
+    button:hover {
+      background: #ff6aa9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Banyak emoji lucu -->
+  <div class="emoji" style="top: 20px; left: 15px;">💌</div>
+  <div class="emoji" style="top: 60px; right: 20px;">💕</div>
+  <div class="emoji" style="bottom: 70px; left: 25px;">🌸</div>
+  <div class="emoji" style="bottom: 40px; right: 35px;">💞</div>
+  <div class="emoji" style="top: 180px; right: 80px;">💖</div>
+  <div class="emoji" style="bottom: 130px; left: 80px;">🩷</div>
+  <div class="emoji" style="top: 250px; right: 50px;">🫶</div>
+  <div class="emoji" style="bottom: 200px; left: 40px;">💐</div>
+
+  <!-- Jam -->
+  <div class="time" id="clock">00:00:00</div>
+
+  <!-- Bubble quote -->
+  <div class="bubble" id="quote">Loading quote...</div>
+
+  <!-- Tombol play musik -->
+  <button onclick="playMusic()">Play Music 🎶</button>
+
+  <!-- Footer -->
+  <div class="footer">made from love for the one I love 💌</div>
+
+  <!-- Musik -->
+  <audio id="bgmusic" loop autoplay>
+    <source src="https://sndup.net/pqkxw/d" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const quotes = [
+      "1. Hai baby! Awal bulan, semoga harinya semanis kamu 💖",
+      "2. Ga masalah kalau hari ini berat, aku selalu ada 💌",
+      "3. Jangan lupa makan siang ya cinta 🌸",
+      "4. Semangat lemburnya ya semestaku! 🩷",
+      "5. Kamu tuh hebat, walaupun suka lupa 🫶",
+      "6. Kalau cape, jangan ragu cerita ke aku ya 😘",
+      "7. Kangen? Sama. Tapi lebih kangen kamu bahagia 💕",
+      "8. Aku yakin kamu bisa hadapi apapun hari ini 🌷",
+      "9. Dikit lagi weekend baby, semangat 💞",
+      "10. Jangan stress, kamu udah ngelakuin yg terbaik 💗",
+      "11. Gaji emang penting, tapi kamu lebih penting 😍",
+      "12. Kalau bisa peluk kamu sekarang, aku pasti udah peluk 🐻",
+      "13. Hari ini cukup kamu tau aku mikirin kamu 💘",
+      "14. Semangat kerja sayang, aku tunggu kabar baik kamu 🌼",
+      "15. Kamu pusing? sini aku peluk lewat kata 🫂",
+      "16. Jangan lupa minum air putih ya semestaku 💧",
+      "17. Aku bangga kamu ga nyerah meski capek 💪",
+      "18. You deserve every love & every rest 💝",
+      "19. Hujan atau panas, kamu tetep bikin hati hangat 😚",
+      "20. Hari ini lebih indah karena kamu 💞",
+      "21. Ngerasa sendiri? Aku disini kok 🤍",
+      "22. Cuma mau bilang: I love u more everyday 💗",
+      "23. Lelahmu bukan sia-sia, ada aku yg hargai 😇",
+      "24. Jangan bandingin diri kamu sama orang lain yaa 💌",
+      "25. Lembur boleh, lupa aku jangan hihihi",
+      "26. Nanti ketemu ya? Aku sabar nungguinmu 😭",
+      "27. Hari ini cukup rebahan dan cinta dari aku 😴",
+      "28. Hari terakhir kerja minggu ini, semangaaatt 💥",
+      "29. Kamu itu rumah teraman buat aku 🏠",
+      "30. Kamu luar biasa, bahkan pas kamu ga nyadar 🥰"
     ];
 
     function updateTime() {
       const now = new Date();
-      const hour = String(now.getHours()).padStart(2, '0');
-      const minute = String(now.getMinutes()).padStart(2, '0');
-      document.getElementById("clock").innerText = `${hour}:${minute}`;
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById("clock").innerText = `${h}:${m}:${s}`;
     }
 
     function updateQuote() {
-      const day = new Date().getDate(); // 1 - 31
+      const day = new Date().getDate();
       const index = (day - 1) % quotes.length;
       document.getElementById("quote").innerText = quotes[index];
     }
 
     function playMusic() {
-      const btn = document.querySelector('.music-button');
-      const audio = document.getElementById('bgmusic');
-      audio.play().then(() => {
-        btn.style.display = 'none';
-      }).catch(() => {
-        alert('Klik ulang yaa, kadang browser rewel 😅');
-      });
+      const audio = document.getElementById("bgmusic");
+      audio.play().catch(() => {});
     }
 
     updateTime();
@@ -32,5 +180,3 @@ k      "28. Hari terakhir kerja minggu ini, semangaaatt 💥",
   </script>
 </body>
 </html>
-
-
