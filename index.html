@@ -1,4 +1,4 @@
-k<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -11,9 +11,9 @@ k<!DOCTYPE html>
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #ffd6eb, #ffeaf5, #ffc4e1, #ffccda);
-      background-size: 600% 600%;
-      animation: gradientFlow 25s ease infinite;
+      background: linear-gradient(135deg, #ffd6eb, #ffc4e1, #ffeaf5, #ffccda);
+      background-size: 400% 400%;
+      animation: gradientMove 20s ease infinite;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -24,7 +24,7 @@ k<!DOCTYPE html>
       color: #444;
     }
 
-    @keyframes gradientFlow {
+    @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
@@ -32,16 +32,16 @@ k<!DOCTYPE html>
 
     .bubble {
       background: rgba(255, 255, 255, 0.85);
-      border-radius: 25px;
+      border-radius: 30px;
       padding: 25px 30px;
-      max-width: 85%;
-      font-size: 1.3rem;
+      max-width: 80%;
+      font-size: 1.5rem;
       text-align: center;
-      box-shadow: 0 8px 25px rgba(255, 192, 203, 0.3);
+      box-shadow: 0 10px 25px rgba(255, 192, 203, 0.4);
       animation: fadeIn 1.5s ease forwards;
       opacity: 0;
-      margin: 20px 0;
-      backdrop-filter: blur(4px);
+      margin-top: 30px;
+      backdrop-filter: blur(5px);
     }
 
     @keyframes fadeIn {
@@ -49,97 +49,100 @@ k<!DOCTYPE html>
     }
 
     .time {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 40px;
       color: #555;
     }
 
     .emoji {
       font-size: 1.8rem;
       position: absolute;
-      opacity: 0.85;
+      opacity: 0.8;
+      pointer-events: none;
     }
-
-    .emoji1 { top: 20px; left: 20px; transform: rotate(-20deg); }
-    .emoji2 { top: 60px; right: 30px; transform: rotate(15deg); }
-    .emoji3 { bottom: 80px; left: 40px; transform: rotate(10deg); }
-    .emoji4 { bottom: 50px; right: 25px; transform: rotate(-15deg); }
-    .emoji5 { top: 150px; right: 90px; transform: rotate(30deg); }
-    .emoji6 { bottom: 140px; left: 80px; transform: rotate(-25deg); }
 
     .footer {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: #666;
       position: absolute;
-      bottom: 10px;
+      bottom: 12px;
       text-align: center;
       font-style: italic;
-    }
-
-    audio {
-      display: none;
     }
   </style>
 </head>
 <body>
-  <!-- EMOJIS -->
-  <div class="emoji emoji1">💌</div>
-  <div class="emoji emoji2">💕</div>
-  <div class="emoji emoji3">💖</div>
-  <div class="emoji emoji4">💘</div>
-  <div class="emoji emoji5">💝</div>
-  <div class="emoji emoji6">🌸</div>
 
-  <!-- JAM -->
+  <div id="emojizone"></div>
+
   <div class="time" id="clock">00:00:00</div>
-
-  <!-- QUOTE -->
   <div class="bubble" id="quote">Loading quote...</div>
-
-  <!-- FOOTER -->
   <div class="footer">made from love for the one I love 💌</div>
 
-  <!-- MUSIK -->
-  <audio autoplay loop id="bgmusic">
-    <source src="https://dl.sndup.net/qmw8/Dreamy%20Nights%20-%20Scandinavianz.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
-  <!-- SCRIPT -->
   <script>
-    const quotes = [
-      "1. Hai cinta! Awal bulan, semoga semua urusan kamu lancar 💖",
-      "2. Jangan lupa senyum hari ini yaa sayang 🥰",
-      "3. Aku tau kamu lagi sibuk, tapi semoga kamu tetap bahagia 🫶",
-      "4. Kerja lembur ga gampang, tapi kamu hebat banget 😚",
-      "5. Kalau capek, tarik napas dulu, peluk bayangan aku 🤗",
-      "6. Dunia boleh berat, tapi kamu punya aku 😘",
-      "7. Weekend sebentar lagi, semangat semestaku 💞",
-      "8. Kamu layak dicintai tiap hari, termasuk hari ini 💗",
-      "9. Gausah khawatir, kamu nggak sendirian ❤️",
-      "10. Kalau bisa aku teleport, aku udah peluk kamu dari tadi 😭",
-      "11. Apa pun yang kamu kerjain hari ini, aku bangga banget 💘",
-      "12. Jangan takut gagal, aku selalu support kamu 💪",
-      "13. Hari ini kamu cakep banget di bayangan aku 💓",
-      "14. Love u more today than yesterday 😍",
-      "15. Kalau kamu lelah, kamu boleh sandarin dunia kamu ke aku 🥺",
-      "16. Setiap detik aku mikirin kamu, baby 🕊️",
-      "17. Semangat kerja cinta! Kamu keren banget 💥",
-      "18. Ga sabar ketemu dan cerita semua hari-hari kamu 💌",
-      "19. Mikirin kamu bikin aku semangat terus 💐",
-      "20. Kamu semestaku, kamu duniaku 🪐💖",
-      "21. Peluk dari jarak jauh tapi hati deket selalu 🫂",
-      "22. Semoga hari ini ada kabar baik buat kamu yaa 🥹",
-      "23. Aku di sini, nunggu kamu pulang cerita 🛋️",
-      "24. Kamu layak dapet bahagia sebesar langit 💫",
-      "25. Udah 25 hari kamu kerja keras, kamu luar biasa banget 💝",
-      "26. Hari ini indah karena kamu ada di pikiranku 🌈",
-      "27. Walau jarak jauh, cintaku deket banget 😘",
-      "28. Aku rindu, tapi aku juga percaya kamu pasti kuat 💪",
-      "29. Gausah jadi sempurna, cukup jadi kamu yg aku cinta 💕",
-      "30. Satu bulan penuh, kamu tetap hebat dan dicintai 💘"
+    // Emoji List
+    const emojiList = [
+      '💌','💕','💞','💓','💖','💝','💘','🩷','🤍','🩶','🖤','🤎',
+      '💜','💙','🩵','💚','💛','🧡','❤️','💐','🌹','🌺','🌷','🪷',
+      '🌸','💮','🏵️','🪻','🌻','🌼','🍄','☘️','🍀','🌿','👩🏻‍❤️‍💋‍👨🏻',
+      '🫶','😻','😍','🥰','😘','😗'
     ];
+
+    // Generate random emoji positions
+    function renderEmojis() {
+      const zone = document.getElementById('emojizone');
+      for (let i = 0; i < 25; i++) {
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji';
+        emoji.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
+        emoji.style.top = `${Math.random() * 90}%`;
+        emoji.style.left = `${Math.random() * 90}%`;
+        emoji.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+        zone.appendChild(emoji);
+      }
+    }
+
+    // 30+ Quotes
+    const quotes = [
+      "Hai sayang! Awal bulan, semoga rezekimu juga awal bahagia 💌",
+      "Ga masalah kalau hari ini berat, aku di sini dukung kamu 🩷",
+      "Hari ke-3 kerja, semangat terus ya baby. Jangan lupa makan 🍜",
+      "Aku kangen, tapi aku lebih pengen kamu bahagia di sana 😊",
+      "Ingat, kamu tuh luar biasa walaupun kamu kadang lupa 😘",
+      "Apapun hasil kerja kamu hari ini, aku tetap bangga 🫶",
+      "Minggu pertama udah mau selesai. Kamu hebat cinta! 💪",
+      "Jangan terlalu keras sama diri sendiri yaa semestaku 💗",
+      "Kamu pantas dapat yang baik, termasuk diriku 😚",
+      "Kalau kamu capek, izinkan aku jadi tempat pulang 💞",
+      "Semangat terus, dan istirahat yang cukup ya 🌙",
+      "Cinta itu sabar. Dan aku sabar nunggu kamu sukses 😇",
+      "Hari ini mungkin biasa, tapi kamu tetap luar biasa ✨",
+      "Weekend sebentar lagi, gaspol kerjaannya yaa 😄",
+      "Hari ini cukup kamu tau aku mikirin kamu 😌",
+      "Kalau bisa peluk lewat layar, udah aku peluk dari tadi 🤗",
+      "Aku doain lemburmu lancar dan cepet selesai 😍",
+      "Kamu sibuk? Gapapa, asal kamu bahagia 🌸",
+      "Hujan atau panas, semangatmu selalu hangat 💘",
+      "Kamu bisa, kamu kuat, dan kamu disayang 🥰",
+      "Minggu ke-3! Kita makin deket ketemu ya? 😭",
+      "Satu hal yang bikin aku semangat: kamu 🌷",
+      "Jangan pernah ragu: kamu hebat dan dicintai 💕",
+      "Tanggal muda, semoga bonus dan cinta mengalir ya 💸❤️",
+      "Hari ini lebih cerah karena ada namamu di doaku ☀️",
+      "Jangan mikirin yang bikin sedih, pikirin aku aja 😋",
+      "Kamu udah capek? Ayo rebahan sambil dengerin lagu 🎧",
+      "Hari terakhir kerja minggu ini, semangaaatt 💥",
+      "Kamu pantas dapet cinta yang tenang. Aku coba jadi itu.",
+      "Udah 30 hari kamu hebat terus. Aku bangga banget punya kamu 💞"
+    ];
+
+    // Quote dan Jam
+    function updateQuote() {
+      const day = new Date().getDate();
+      const index = (day - 1) % quotes.length;
+      document.getElementById("quote").innerText = quotes[index];
+    }
 
     function updateTime() {
       const now = new Date();
@@ -149,21 +152,11 @@ k<!DOCTYPE html>
       document.getElementById("clock").innerText = `${h}:${m}:${s}`;
     }
 
-    function updateQuote() {
-      const today = new Date().getDate();
-      const index = (today - 1) % quotes.length;
-      document.getElementById("quote").innerText = quotes[index];
-    }
-
-    // Initial update
-    updateTime();
+    renderEmojis();
     updateQuote();
+    updateTime();
     setInterval(updateTime, 1000);
-
-    // Play music on click (some browsers need interaction)
-    window.addEventListener('click', () => {
-      document.getElementById('bgmusic').play().catch(() => {});
-    });
   </script>
 </body>
 </html>
+
