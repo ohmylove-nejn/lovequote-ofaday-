@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,36 +13,37 @@
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ffe0ec, #ffbad2, #ffcce0);
+      background: linear-gradient(135deg, #ffd6eb, #ffc4e1, #ffeaf5, #ffccda);
       background-size: 400% 400%;
-      animation: gradientBG 20s ease infinite;
+      animation: gradientMove 20s ease infinite;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      color: #333;
-      position: relative;
+      flex-direction: column;
       overflow: hidden;
+      position: relative;
+      color: #444;
     }
 
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .bubble {
-      background: white;
-      border-radius: 30px;
-      padding: 40px 50px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 25px;
+      padding: 25px 30px;
       max-width: 80%;
-      font-size: 1.6rem;
+      font-size: 1.35rem;
       text-align: center;
-      margin-top: 20px;
+      box-shadow: 0 10px 25px rgba(255, 192, 203, 0.4);
+      animation: fadeIn 1.5s ease forwards;
       opacity: 0;
-      animation: fadeIn 2s ease forwards;
+      margin-top: 20px;
+      backdrop-filter: blur(8px);
     }
 
     @keyframes fadeIn {
@@ -48,30 +51,33 @@
     }
 
     .time {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 30px;
+      color: #555;
     }
+
+    .emoji {
+      font-size: 2.2rem;
+      position: absolute;
+      opacity: 0.8;
+    }
+
+    .emoji1 { top: 20px; left: 15px; transform: rotate(-15deg); }
+    .emoji2 { top: 50px; right: 20px; transform: rotate(10deg); }
+    .emoji3 { bottom: 60px; left: 30px; transform: rotate(5deg); }
+    .emoji4 { bottom: 40px; right: 25px; transform: rotate(-10deg); }
+    .emoji5 { top: 180px; right: 80px; transform: rotate(25deg); }
+    .emoji6 { bottom: 130px; left: 80px; transform: rotate(-20deg); }
 
     .footer {
-      position: fixed;
-      bottom: 20px;
+      font-size: 0.75rem;
+      color: #666;
+      position: absolute;
+      bottom: 12px;
       text-align: center;
-      font-size: 0.85rem;
-      color: #555;
       font-style: italic;
     }
-
-    .love-icon {
-      font-size: 2rem;
-      position: absolute;
-      color: #ff8ccf;
-    }
-
-    .top-left { top: 20px; left: 20px; }
-    .top-right { top: 20px; right: 20px; }
-    .bottom-left { bottom: 60px; left: 20px; }
-    .bottom-right { bottom: 60px; right: 20px; }
 
     audio {
       display: none;
@@ -79,25 +85,25 @@
   </style>
 </head>
 <body>
-  <div class="love-icon top-left">💖</div>
-  <div class="love-icon top-right">💘</div>
+  <div class="emoji emoji1">💗</div>
+  <div class="emoji emoji2">💖</div>
+  <div class="emoji emoji3">💘</div>
+  <div class="emoji emoji4">💞</div>
+  <div class="emoji emoji5">🩷</div>
+  <div class="emoji emoji6">💕</div>
 
   <div class="time" id="clock">00:00</div>
   <div class="bubble" id="quote">Loading quote...</div>
+  <div class="footer">made from love for the one I love 💌</div>
 
-  <div class="love-icon bottom-left">💗</div>
-  <div class="love-icon bottom-right">💞</div>
-
-  <div class="footer">made from love for who I love 💕</div>
-
-  <audio autoplay loop>
+  <audio autoplay loop id="bgmusic">
     <source src="https://dl.sndup.net/3sf3/Morning%20Chill%20Lo-fi.mp3" type="audio/mpeg">
-    Your browser does not support audio playback.
+    Your browser does not support the audio element.
   </audio>
 
   <script>
     const quotes = [
-      "1. Hai sayang! Awal bulan, semoga rezekimu juga awal bahagia 💌",
+      "1. Hai sayaang! Awal bulan, semoga rezekimu juga awal bahagia 💌",
       "2. Ga masalah kalau hari ini berat, aku di sini dukung kamu 🩷",
       "3. Hari ke-3 kerja, semangat terus ya baby. Jangan lupa makan 🍜",
       "4. Aku kangen, tapi aku lebih pengen kamu bahagia di sana 😊",
@@ -144,8 +150,12 @@
 
     updateTime();
     updateQuote();
-    setInterval(updateTime, 1000); // update jam tiap detik
+    setInterval(updateTime, 1000);
+
+    // trigger play ketika user sentuh layar
+    window.addEventListener('click', () => {
+      document.getElementById('bgmusic').play().catch(() => {});
+    });
   </script>
 </body>
 </html>
-
