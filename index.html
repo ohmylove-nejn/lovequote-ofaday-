@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,17 +31,17 @@
     }
 
     .bubble {
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 25px;
-      padding: 25px 30px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 35px;
+      padding: 30px 40px;
       max-width: 80%;
-      font-size: 1.35rem;
+      font-size: 1.5rem;
       text-align: center;
       box-shadow: 0 10px 25px rgba(255, 192, 203, 0.4);
       animation: fadeIn 1.5s ease forwards;
       opacity: 0;
       margin-top: 20px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
     }
 
     @keyframes fadeIn {
@@ -79,6 +77,24 @@
       font-style: italic;
     }
 
+    .music-button {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background-color: #fff0f8;
+      color: #ff69b4;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+      cursor: pointer;
+      z-index: 100;
+      animation: fadeIn 1s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
     audio {
       display: none;
     }
@@ -96,6 +112,8 @@
   <div class="bubble" id="quote">Loading quote...</div>
   <div class="footer">made from love for the one I love 💌</div>
 
+  <button class="music-button" onclick="playMusic()">💖 Play Musik</button>
+
   <audio autoplay loop id="bgmusic">
     <source src="https://dl.sndup.net/3sf3/Morning%20Chill%20Lo-fi.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -103,7 +121,7 @@
 
   <script>
     const quotes = [
-      "1. Hai sayaang! Awal bulan, semoga rezekimu juga awal bahagia 💌",
+      "1. Hai sayang! Awal bulan, semoga rezekimu juga awal bahagia 💌",
       "2. Ga masalah kalau hari ini berat, aku di sini dukung kamu 🩷",
       "3. Hari ke-3 kerja, semangat terus ya baby. Jangan lupa makan 🍜",
       "4. Aku kangen, tapi aku lebih pengen kamu bahagia di sana 😊",
@@ -148,14 +166,20 @@
       document.getElementById("quote").innerText = quotes[index];
     }
 
+    function playMusic() {
+      const btn = document.querySelector('.music-button');
+      const audio = document.getElementById('bgmusic');
+      audio.play().then(() => {
+        btn.style.display = 'none';
+      }).catch(() => {
+        alert('Klik ulang yaa, kadang browser rewel 😅');
+      });
+    }
+
     updateTime();
     updateQuote();
     setInterval(updateTime, 1000);
-
-    // trigger play ketika user sentuh layar
-    window.addEventListener('click', () => {
-      document.getElementById('bgmusic').play().catch(() => {});
-    });
   </script>
 </body>
 </html>
+
