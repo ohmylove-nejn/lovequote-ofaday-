@@ -1,100 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Love Quote of the Day</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lovequote Harian</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
-      background: linear-gradient(145deg, #ffe6f0, #ffd6ec);
-      font-family: Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe0ec, #ffbad2, #ffcce0);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      padding: 20px;
-      text-align: center;
+      min-height: 100vh;
+      color: #333;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
     .bubble {
-      background-color: #fff0f6;
-      border-radius: 25px;
-      padding: 20px 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      max-width: 600px;
-      font-size: 1.4em;
-      color: #b4005c;
-      margin-bottom: 20px;
-      position: relative;
+      background: white;
+      border-radius: 30px;
+      padding: 40px 50px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 80%;
+      font-size: 1.6rem;
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
     }
 
-    .bubble::after {
-      content: '';
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .time {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .love-icon {
+      font-size: 2rem;
       position: absolute;
-      bottom: -20px;
-      left: 50%;
-      margin-left: -10px;
-      border-width: 10px 10px 0;
-      border-style: solid;
-      border-color: #fff0f6 transparent transparent transparent;
+      color: #ff8ccf;
     }
 
-    .date {
-      font-size: 0.9em;
-      color: #884466;
+    .top-left { top: 20px; left: 20px; }
+    .top-right { top: 20px; right: 20px; }
+    .bottom-left { bottom: 60px; left: 20px; }
+    .bottom-right { bottom: 60px; right: 20px; }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
+  <div class="love-icon top-left">💖</div>
+  <div class="love-icon top-right">💘</div>
 
+  <div class="time" id="clock">00:00</div>
   <div class="bubble" id="quote">Loading quote...</div>
-  <div class="date" id="date"></div>
+
+  <div class="love-icon bottom-left">💗</div>
+  <div class="love-icon bottom-right">💞</div>
+
+  <div class="footer">made from love for who I love 💕</div>
+
+  <audio autoplay loop>
+    <source src="https://dl.sndup.net/3sf3/Morning%20Chill%20Lo-fi.mp3" type="audio/mpeg">
+    Your browser does not support audio playback.
+  </audio>
 
   <script>
-    const panggilan = ["sayang", "cinta", "baby", "cantik", "semestaku"];
-    const nama = panggilan[Math.floor(Math.random() * panggilan.length)];
-
     const quotes = [
-      `Selamat kerja, ${nama}! Jangan lupa sarapan biar kuat, ya.`,
-      `Hari ini Senin, semangat kerja ya ${nama}! Aku support dari jauh 🫶`,
-      `Kalau capek di tengah jalan, inget ada aku yang nunggu kamu cerita.`,
-      `Semangat ya ${nama}, meskipun lembur, jangan terlalu dipaksain.`,
-      `Kalo udah masuk hari Rabu, itu tandanya kamu udah hebat sejauh ini.`,
-      `${nama}, kerjaan boleh numpuk tapi kamu gak sendirian kok.`,
-      `Jangan lupa minum air putih banyak hari ini ya ${nama}, please 😤🩷`,
-      `Kalo lagi mumet, istirahat bentar. Aku juga lagi mikirin kamu.`,
-      `Nggak apa-apa kalau hari ini berat, yang penting kamu udah coba.`,
-      `Aku percaya kamu bisa lewatin hari ini, kaya biasanya.`,
-      `Hari ini kamu gak sendirian, ${nama}. Aku support dari kejauhan 🙋‍♂️`,
-      `Minggu ini keras banget ya? Tapi kamu lebih kuat dari itu.`,
-      `Lembur lagi ${nama}? Jangan sampe lupa makan ya, aku marah lho 😠❤️`,
-      `Jangan kebanyakan mikir, fokus satu-satu aja. Pelan-pelan yaa.`,
-      `Aku tau kamu capek, tapi kamu keren banget bisa terus jalan.`,
-      `${nama}, semangat! Aku tunggu kabar kamu hari ini kayak biasa.`,
-      `Kalau hari ini bikin pengen nangis, gak apa-apa kok... boleh.`,
-      `Kamu boleh rehat bentar, dunia gak akan marah kok.`,
-      `Nggak semua orang bisa kuat kayak kamu, ${nama}. Aku bangga lho.`,
-      `Hari Jumat, semangat dikit lagi weekend meski Sabtu kerja lagi 😅`,
-      `Kalau kamu mulai ragu, inget kamu udah sejauh ini!`,
-      `Kadang gak harus sempurna, yang penting kamu terus nyoba.`,
-      `Satu hari lagi, ayo kita lewatin bareng walau dari jauh.`,
-      `Hari ini nggak harus hebat kok, cukup bertahan aja udah luar biasa.`,
-      `Kalo kamu sempet senyum hari ini, berarti aku berhasil nemenin kamu.`,
-      `Sabtu kerja emang nyebelin, tapi kamu selalu bisa handle semuanya.`,
-      `Satu hal yang pasti: aku selalu mikirin kamu tiap kamu kerja.`,
-      `Ga sabar pengen ketemu kamu, tapi sekarang aku dukung dari jauh dulu.`,
-      `Kalo kamu lagi diem, aku ngerti kok... capek ya ${nama}? Gak apa-apa.`,
-      `Hari Minggu nanti, kamu harus bener-bener istirahat ya. Titik.`
+      "1. Hai sayang! Awal bulan, semoga rezekimu juga awal bahagia 💌",
+      "2. Ga masalah kalau hari ini berat, aku di sini dukung kamu 🩷",
+      "3. Hari ke-3 kerja, semangat terus ya baby. Jangan lupa makan 🍜",
+      "4. Aku kangen, tapi aku lebih pengen kamu bahagia di sana 😊",
+      "5. Ingat, kamu tuh luar biasa walaupun kamu kadang lupa 😘",
+      "6. Apapun hasil kerja kamu hari ini, aku tetap bangga 🫶",
+      "7. Minggu pertama udah mau selesai. Kamu hebat cinta! 💪",
+      "8. Jangan terlalu keras sama diri sendiri yaa semestaku 💗",
+      "9. Kamu pantas dapat yang baik, termasuk diriku 😚",
+      "10. Kalau kamu capek, izinkan aku jadi tempat pulang 💞",
+      "11. Semangat terus, dan istirahat yang cukup ya 🌙",
+      "12. Cinta itu sabar. Dan aku sabar nunggu kamu sukses 😇",
+      "13. Hari ini mungkin biasa, tapi kamu tetap luar biasa ✨",
+      "14. Weekend sebentar lagi, gaspol kerjaannya yaa 😄",
+      "15. Hari ini cukup kamu tau aku mikirin kamu 😌",
+      "16. Kalau bisa peluk lewat layar, udah aku peluk dari tadi 🤗",
+      "17. Aku doain lemburmu lancar dan cepet selesai 😍",
+      "18. Kamu sibuk? Gapapa, asal kamu bahagia 🌸",
+      "19. Hujan atau panas, semangatmu selalu hangat 💘",
+      "20. Kamu bisa, kamu kuat, dan kamu disayang 🥰",
+      "21. Minggu ke-3! Kita makin deket ketemu ya? 😭",
+      "22. Satu hal yang bikin aku semangat: kamu 🌷",
+      "23. Jangan pernah ragu: kamu hebat dan dicintai 💕",
+      "24. Tanggal muda, semoga bonus dan cinta mengalir ya 💸❤️",
+      "25. Hari ini lebih cerah karena ada namamu di doaku ☀️",
+      "26. Jangan mikirin yang bikin sedih, pikirin aku aja 😋",
+      "27. Kamu udah capek? Ayo rebahan sambil dengerin lagu 🎧",
+      "28. Hari terakhir kerja minggu ini, semangaaatt 💥",
+      "29. Kamu pantas dapet cinta yang tenang. Aku coba jadi itu.",
+      "30. Udah 30 hari kamu hebat terus. Aku bangga banget punya kamu 💞"
     ];
 
-    const now = new Date();
-    const day = now.getDate();
-    const quote = quotes[(day - 1) % quotes.length];
+    function updateTime() {
+      const now = new Date();
+      const hour = String(now.getHours()).padStart(2, '0');
+      const minute = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById("clock").innerText = `${hour}:${minute}`;
+    }
 
-    document.getElementById('quote').textContent = quote;
-    document.getElementById('date').textContent = now.toDateString();
+    function updateQuote() {
+      const day = new Date().getDate(); // 1 - 31
+      const index = (day - 1) % quotes.length;
+      document.getElementById("quote").innerText = quotes[index];
+    }
+
+    updateTime();
+    updateQuote();
+    setInterval(updateTime, 1000); // update jam tiap detik
   </script>
-
 </body>
 </html>
 
