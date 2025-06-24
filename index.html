@@ -1,22 +1,25 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Love Dashboard</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ffd6eb, #ffc4e1, #ffeaf5, #ffccda);
+  background: linear-gradient(135deg, #ffd6eb, #ffeaf5, #ffc4e1, #ffccda);
   background-size: 400% 400%;
   animation: gradientMove 20s ease infinite;
-  min-height: 100vh;
+  color: #444;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
+  justify-content: start;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  padding-top: 80px;
 }
 
 @keyframes gradientMove {
@@ -25,116 +28,121 @@
   100% { background-position: 0% 50%; }
 }
 
-h1 {
-  margin-bottom: 20px;
-  color: #c4166b;
+.title {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
   text-align: center;
+  font-weight: 600;
+  color: #333;
 }
 
-.columns {
+.button-container {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
-.column {
-  background: rgba(255, 255, 255, 0.85);
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(255, 0, 128, 0.2);
-  max-width: 300px;
-  flex: 1;
-  min-width: 250px;
-  text-align: center;
+.mood-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.mood-btn:hover {
+  background-color: #ffe1ec;
 }
 
 .quote-box {
-  margin-top: 15px;
-  font-size: 1rem;
-  color: #444;
-  background: #fff0f5;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.4);
-  transition: all 0.4s ease;
+  max-width: 80%;
+  background: rgba(255,255,255,0.85);
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(255, 192, 203, 0.4);
+  text-align: center;
+  font-size: 1.1rem;
+  display: none;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .footer {
-  margin-top: 30px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 40px;
+  text-align: center;
   font-style: italic;
-  color: #888;
+}
+
+.emoji-bg {
+  position: absolute;
+  font-size: 2.5rem;
+  opacity: 0.2;
+  pointer-events: none;
 }
 
   </style>
 </head>
 <body>
-  <h1>💛 Open This When You Feel</h1>
-  <div class="columns">
-    <div class="column">
-      <h3>Happy 😊</h3>
-      <div class="quote-box" id="happyQuote">Loading...</div>
-    </div>
-    <div class="column">
-      <h3>Tired 😮‍💨</h3>
-      <div class="quote-box" id="tiredQuote">Loading...</div>
-    </div>
-    <div class="column">
-      <h3>Sad 🥺</h3>
-      <div class="quote-box" id="sadQuote">Loading...</div>
-    </div>
-  </div>  <div class="footer">made from love for the one I love 💌</div>  <script>
-    const happyQuotes = [
-      "1. Sayang, walau Senin kadang berat, tapi kalau kamu bahagia hari ini, aku makin yakin kamu luar biasa.",
-      "2. Bahagiamu hari ini jadi kabar terbaik buatku. Terus senyum ya!",
-      "3. Hari ini kamu bahagia? Berarti semesta juga ikut senang!",
-      "4. Liat kamu bahagia bikin aku makin kagum. Kamu hebat banget!",
-      "5. Senyum kamu tuh kayak hadiah minggu ini.",
-      "6. Libur + kamu bahagia = kombo terbaik.",
-      "7. Happy kamu hari ini tuh nular ke aku juga 🥰",
-      "8. Bahagia di hari Senin? Kamu keren banget.",
-      "9. Kalau kamu senyum sekarang, aku pengen jadi alasannya 😚",
-      "10. Kamu emang paling cakep pas senyum."
-      // lanjutkan sampai 30...
-    ];
+  <div class="title">Open this when you feel...</div>
+  <div class="button-container">
+    <button class="mood-btn" onclick="showQuote('happy')">😊 Happy</button>
+    <button class="mood-btn" onclick="showQuote('tired')">😮‍💨 Tired</button>
+    <button class="mood-btn" onclick="showQuote('sad')">😢 Sad</button>
+  </div>
+  <div class="quote-box" id="quoteBox"></div>
+  <div class="footer">made from love for the one I love 💌</div>  <script>
+    const quotes = {
+      happy: [
+        "Sayang, walau Senin kadang berat, tapi kalau kamu bahagia hari ini, aku makin yakin kamu luar biasa.",
+        "Cintaku, bahagiamu hari ini jadi kabar terbaik buatku. Terus senyum ya, kamu pantes dapet itu tiap hari.",
+        "Semestaku, hari ini kamu bahagia? Berarti semesta lagi baik ke kamu—dan aku ikut senang banget!",
+        // ... lanjutkan sampai 30
+      ],
+      tired: [
+        "Sayang, awal minggu emang paling nguras tenaga. Tapi kamu hebat udah jalanin hari ini. Bangga banget sama kamu.",
+        "Cintaku, kalau capek, istirahat ya. Kamu nggak harus kuat terus, cukup tahu aku selalu di sini nemenin.",
+        "Semestaku, udah setengah minggu, pasti badan dan pikiran mulai berat. Nanti malam istirahat yang cukup ya.",
+        // ... lanjutkan sampai 30
+      ],
+      sad: [
+        "Sayang, aku tau kadang Senin nggak cuma bikin capek, tapi juga bikin hati kerasa kosong. Kamu gak sendiri ya.",
+        "Cintaku, kalau hari ini kamu sedih, gak apa-apa. Kamu boleh nangis, kamu boleh diam. Aku tetap peluk kamu dari sini.",
+        "Semestaku, tengah minggu tapi rasanya berat? Yuk pelan-pelan, kamu nggak harus pura-pura kuat di hadapanku.",
+        // ... lanjutkan sampai 30
+      ]
+    };
 
-    const tiredQuotes = [
-      "1. Awal minggu emang berat. Tapi kamu hebat banget udah jalanin hari ini.",
-      "2. Kalau capek, istirahat ya. Kamu gak harus kuat terus.",
-      "3. Udah setengah minggu, badan dan pikiran pasti mulai berat.",
-      "4. Aku tahu kamu mulai lelah. Tapi aku selalu di sini nemenin kamu.",
-      "5. Sedikit lagi weekend, tahan dikit lagi ya sayang.",
-      "6. Libur nih baby, rebahan puas ya.",
-      "7. Minggu ini berat, tapi kamu boleh tenang hari ini.",
-      "8. Awal minggu lagi ya, semangat kerja baby.",
-      "9. Kalau hari ini bikin kamu letih, aku tetap bangga.",
-      "10. Tengah minggu tuh emang tricky. Peluk dari jauh 🤗"
-      // lanjutkan sampai 30...
-    ];
-
-    const sadQuotes = [
-      "1. Kadang Senin gak cuma capek, tapi juga kosong. Kamu gak sendiri.",
-      "2. Kalau kamu sedih, gak apa-apa. Kamu boleh nangis. Aku peluk dari sini.",
-      "3. Tengah minggu dan berat? Pelan-pelan aja, kamu gak harus pura-pura kuat.",
-      "4. Kalau hatimu lagi remuk, cerita ke aku ya. Gak usah jaga image kuat.",
-      "5. Hari ini mungkin kamu ngerasa sendiri... tapi kamu gak sendirian.",
-      "6. Hari libur tapi hati gak tenang? Gak apa-apa, ambil waktu buat tenangin diri.",
-      "7. Kalau kamu sedih, tutup mata dan ingat: aku sayang kamu tanpa syarat.",
-      "8. Dunia kadang gak adil, tapi kamu tetap layak bahagia.",
-      "9. Kamu cukup, bahkan di hari kamu merasa gagal.",
-      "10. Kalau semua terasa berat, kamu boleh berhenti sebentar."
-      // lanjutkan sampai 30...
-    ];
-
-    function getTodayQuote(list) {
-      const day = new Date().getDate();
-      return list[(day - 1) % list.length];
+    function showQuote(mood) {
+      const today = new Date().getDate();
+      const quoteIndex = (today - 1) % 30;
+      const quote = quotes[mood][quoteIndex] || "Belum ada quote hari ini."
+      const box = document.getElementById("quoteBox");
+      box.innerText = quote;
+      box.style.display = "block";
     }
 
-    document.getElementById("happyQuote").innerText = getTodayQuote(happyQuotes);
-    document.getElementById("tiredQuote").innerText = getTodayQuote(tiredQuotes);
-    document.getElementById("sadQuote").innerText = getTodayQuote(sadQuotes);
+    // Tambahkan emoji acak di background
+    const emojis = ["💌", "💕", "💞", "💓", "💖", "💝", "💘", "🩷", "🤍", "🌸", "🌷", "💐", "🪷"];
+    for (let i = 0; i < 25; i++) {
+      const e = document.createElement("div");
+      e.className = "emoji-bg";
+      e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      e.style.left = Math.random() * 100 + "%";
+      e.style.top = Math.random() * 100 + "%";
+      e.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(e);
+    }
   </script></body>
 </html>
 
