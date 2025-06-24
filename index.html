@@ -1,140 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Love Quotes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open This When You Feel...</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ffc4e1, #ffdee9);
-      color: #333;
-      text-align: center;
       margin: 0;
-      padding: 20px;
-      position: relative;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-    }
-
-    .button-group {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffc0cb, #ffe4e1);
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 25px;
-      background-color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-    }
-
-    .quote-section {
-      max-width: 600px;
-      margin: 0 auto 40px;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 20px;
-      display: none;
-    }
-
-    .footer {
-      font-style: italic;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    .emoji-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      font-size: 2rem;
-      opacity: 0.08;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      pointer-events: none;
-    }
+      justify-content: start;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }h1 {
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.button-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+button {
+  font-size: 1em;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  background-color: #fff;
+  color: #ff69b4;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.bubble {
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  color: #333;
+  font-size: 1.1em;
+  text-align: center;
+}
+
+.emoji-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 2.5rem;
+  opacity: 0.08;
+  pointer-events: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+
+#quoteBubble {
+  z-index: 1;
+  position: relative;
+}
+
   </style>
 </head>
 <body>
   <div class="emoji-bg">
     💌💕💞💓💖💝💘🩷🤍🩶🖤🤎💜💙🩵💚💛🧡❤️💐🌹🌺🌷🪷🌸💮🏵️🪻🌻🌼🍄☘️🍀🌿👩🏻‍❤️‍💋‍👨🏻🫶😻😍🥰😘😗
-  </div>
+  </div>  <h1>Open This When You Feel...</h1>
+  <div class="button-container">
+    <button id="btnHappy">😊 Happy</button>
+    <button id="btnTired">💤 Tired</button>
+    <button id="btnSad">😢 Sad</button>
+  </div>  <div id="quoteBubble" class="bubble">
+    Klik salah satu untuk lihat pesannya 💌
+  </div>  <script>
+    const happyQuotes = [
+      "Sayang, walau Senin kadang berat, tapi kalau kamu bahagia hari ini, aku makin yakin kamu luar biasa.",
+      "Cintaku, bahagiamu hari ini jadi kabar terbaik buatku. Terus senyum ya, kamu pantes dapet itu tiap hari.",
+      "Semestaku, hari ini kamu bahagia? Berarti semesta lagi baik ke kamu—dan aku ikut senang banget!",
+      //... sampai 30
+    ];
 
-  <h1>Open this when you feel...</h1>
+    const tiredQuotes = [
+      "Sayang, awal minggu emang paling nguras tenaga. Tapi kamu hebat udah jalanin hari ini. Bangga banget sama kamu.",
+      "Cintaku, kalau capek, istirahat ya. Kamu nggak harus kuat terus, cukup tahu aku selalu di sini nemenin.",
+      "Semestaku, udah setengah minggu, pasti badan dan pikiran mulai berat. Nanti malam istirahat yang cukup ya.",
+      //... sampai 30
+    ];
 
-  <div class="button-group">
-    <button class="btn" onclick="showQuote('happy')">😊 Happy</button>
-    <button class="btn" onclick="showQuote('tired')">😥 Tired</button>
-    <button class="btn" onclick="showQuote('sad')">😭 Sad</button>
-  </div>
-
-  <div id="happyQuote" class="quote-section"></div>
-  <div id="tiredQuote" class="quote-section"></div>
-  <div id="sadQuote" class="quote-section"></div>
-
-  <div class="footer">
-    made from love for the one I love 💌
-  </div>
-
-  <script>
-    // Placeholder array kosong — nanti kamu isi manual ya
-    const happyQuotes = [];
-    const tiredQuotes = [];
-    const sadQuotes = [];
+    const sadQuotes = [
+      "Sayang, aku tau kadang Senin nggak cuma bikin capek, tapi juga bikin hati kerasa kosong. Kamu gak sendiri ya.",
+      "Cintaku, kalau hari ini kamu sedih, gak apa-apa. Kamu boleh nangis, kamu boleh diam. Aku tetap peluk kamu dari sini.",
+      "Semestaku, tengah minggu tapi rasanya berat? Yuk pelan-pelan, kamu nggak harus pura-pura kuat di hadapanku.",
+      //... sampai 30
+    ];
 
     function getTodayIndex() {
       const today = new Date();
-      const day = today.getDate();
-      return day - 1; // index mulai dari 0
+      return today.getDate() - 1;
     }
 
-    function showQuote(feeling) {
-      const idx = getTodayIndex();
-      let quote = "";
+    function showQuote(category) {
+      const index = getTodayIndex();
+      let quote = "Belum ada quote hari ini";
 
-      if (feeling === "happy" && happyQuotes[idx]) {
-        quote = happyQuotes[idx];
-      } else if (feeling === "tired" && tiredQuotes[idx]) {
-        quote = tiredQuotes[idx];
-      } else if (feeling === "sad" && sadQuotes[idx]) {
-        quote = sadQuotes[idx];
-      } else {
-        quote = "Belum ada quote hari ini.";
+      if (category === 'happy') {
+        quote = happyQuotes[index] || quote;
+      } else if (category === 'tired') {
+        quote = tiredQuotes[index] || quote;
+      } else if (category === 'sad') {
+        quote = sadQuotes[index] || quote;
       }
 
-      document.getElementById("happyQuote").style.display = feeling === "happy" ? "block" : "none";
-      document.getElementById("tiredQuote").style.display = feeling === "tired" ? "block" : "none";
-      document.getElementById("sadQuote").style.display = feeling === "sad" ? "block" : "none";
-
-      if (feeling === "happy") {
-        document.getElementById("happyQuote").innerText = quote;
-      } else if (feeling === "tired") {
-        document.getElementById("tiredQuote").innerText = quote;
-      } else if (feeling === "sad") {
-        document.getElementById("sadQuote").innerText = quote;
-      }
+      document.getElementById("quoteBubble").innerText = quote;
     }
-  </script>
-</body>
+
+    document.getElementById("btnHappy").addEventListener("click", () => showQuote('happy'));
+    document.getElementById("btnTired").addEventListener("click", () => showQuote('tired'));
+    document.getElementById("btnSad").addEventListener("click", () => showQuote('sad'));
+  </script></body>
 </html>
 
