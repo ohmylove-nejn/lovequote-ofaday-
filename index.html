@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,114 +12,148 @@
       background: linear-gradient(to bottom, #fbd3e9, #bb377d);
       overflow-x: hidden;
       position: relative;
-    }.emoji-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  font-size: 2.5rem;
-  opacity: 0.05;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  pointer-events: none;
-  animation: float 20s linear infinite;
-}
+    }
 
-@keyframes float {
-  from { transform: translateY(0); }
-  to { transform: translateY(-100%); }
-}
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-h2 {
-  text-align: center;
-  margin-top: 2rem;
-  font-weight: normal;
-  color: #432c56;
-  font-size: 1rem;
-}
+    .emoji-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      font-size: 2.5rem;
+      opacity: 0.05;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      animation: float 20s linear infinite;
+    }
 
-h1 {
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #4b0082;
-  margin-bottom: 3rem;
-}
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-100%); }
+    }
 
-.button-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 40px;
-}
+    h2 {
+      text-align: center;
+      margin-top: 2rem;
+      font-weight: normal;
+      color: #432c56;
+      font-size: 1rem;
+    }
 
-.btn {
-  padding: 12px 30px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 30px;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-  width: 200px;
-  transition: all 0.3s ease;
-}
+    h1 {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #4b0082;
+      margin-bottom: 3rem;
+    }
 
-.btn:hover {
-  opacity: 0.9;
-}
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      width: 100%;
+    }
 
-.happy-btn { background-color: #c087f7; }
-.tired-btn { background-color: #f55d5d; }
-.sad-btn { background-color: #5d55f5; }
+    .btn {
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      width: 200px;
+      transition: all 0.3s ease;
+    }
 
-.quote-section {
-  max-width: 80%;
-  margin: 0 auto 30px;
-  padding: 20px;
-  background-color: rgba(255,255,255,0.7);
-  border-radius: 20px;
-  font-size: 1rem;
-  color: #333;
-  display: none;
-  animation: fadeIn 0.7s ease forwards;
-}
+    .btn:hover {
+      opacity: 0.9;
+    }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    .happy-btn { background-color: #c087f7; }
+    .tired-btn { background-color: #f55d5d; }
+    .sad-btn { background-color: #5d55f5; }
 
-.footer {
-  text-align: center;
-  font-size: 0.9rem;
-  font-style: italic;
-  color: #4b0082;
-  margin-bottom: 2rem;
-}
+    .quote-section {
+      max-width: 80%;
+      margin: 0 auto 30px;
+      padding: 20px;
+      background-color: rgba(255,255,255,0.7);
+      border-radius: 20px;
+      font-size: 1rem;
+      color: #333;
+      display: none;
+      animation: fadeIn 0.7s ease forwards;
+    }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #4b0082;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 480px) {
+      .btn {
+        width: 90%;
+        font-size: 1rem;
+      }
+      .quote-section {
+        max-width: 90%;
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="emoji-bg">
-    💌💕💞💓💖💝💘🩷🤍🩶🖤🤎💜💙🩵💚💛🧡❤️💐🌹🌺🌷🪷🌸💮🏵️🪻🌻🌼🍄☘️🍀🌿👩🏻‍❤️‍💋‍👨🏻🫶😻😍🥰😘😗
-  </div>  <h2>how was your day sayang ?</h2>
-  <h1>open this when you feel..</h1>  <div class="button-group">
-    <button class="btn happy-btn" onclick="showQuote('happy')">H A P P Y 😊</button>
-    <div id="happyQuote" class="quote-section"></div><button class="btn tired-btn" onclick="showQuote('tired')">T I R E D 😥</button>
-<div id="tiredQuote" class="quote-section"></div>
+  <div class="page-wrapper">
+    <div class="emoji-bg">
+      💌💕💞💓💖💝💘🩷🤍🩶🖤🤎💜💙🩵💚💛🧡❤️💐🌹🌺🌷🪷🌸💮🏵️🪻🌻🌼🍄☘️🍀🌿👩🏻‍❤️‍💋‍👨🏻🫶😻😍🥰😘😗
+    </div>
 
-<button class="btn sad-btn" onclick="showQuote('sad')">S A D 😢</button>
-<div id="sadQuote" class="quote-section"></div>
+    <h2>how was your day sayang ?</h2>
+    <h1>open this when you feel..</h1>
 
-  </div>  <div class="footer">
-    made with love, for the one i love 💌
-  </div>  <script>
+    <div class="button-group">
+      <button class="btn happy-btn" onclick="showQuote('happy')">H A P P Y 😊</button>
+      <div id="happyQuote" class="quote-section"></div>
+
+      <button class="btn tired-btn" onclick="showQuote('tired')">T I R E D 😥</button>
+      <div id="tiredQuote" class="quote-section"></div>
+
+      <button class="btn sad-btn" onclick="showQuote('sad')">S A D 😢</button>
+      <div id="sadQuote" class="quote-section"></div>
+    </div>
+
+    <div class="footer">
+      made with love, for the one i love 💌
+    </div>
+  </div>
+
+  <script>
     const happyQuotes = [];
     const tiredQuotes = [];
     const sadQuotes = [];
@@ -129,7 +164,7 @@ h1 {
 
     function showQuote(feeling) {
       const index = getTodayIndex();
-      let quote = "Belum ada quote hari ini.";
+      let quote = "quotenya blm ada nih syg hihi";
 
       if (feeling === 'happy' && happyQuotes[index]) quote = happyQuotes[index];
       else if (feeling === 'tired' && tiredQuotes[index]) quote = tiredQuotes[index];
@@ -143,6 +178,12 @@ h1 {
       section.textContent = quote;
       section.style.display = 'block';
     }
-  </script></body>
+  </script>
+</body>
 </html>
+
+
+
+
+
 
