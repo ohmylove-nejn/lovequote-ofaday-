@@ -3,243 +3,191 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Quotes of a Day 💌</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
+  <title>Love Quote of a Day</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: "Playfair Display", serif;
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f9e3f2, #e0c3fc);
-      color: #4b0082;
-      height: 100vh;
-      overflow: hidden;
+      background: linear-gradient(135deg, #fff8f9 0%, #f3e7e9 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      position: relative;
-      text-align: center;
-    }
-
-    .emoji-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .emoji-bg span {
-      position: absolute;
-      animation: float 12s infinite ease-in-out;
-      opacity: 0.7;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-      25% { opacity: 1; }
-      50% { transform: translateY(50vh) translateX(20px); }
-      75% { opacity: 1; }
-      100% { transform: translateY(-10vh) translateX(-20px); opacity: 0; }
-    }
-
-    .datetime {
-      margin-top: 30px;
-      line-height: 1.5;
-      font-weight: 500;
-      font-size: 1rem;
-      z-index: 2;
-    }
-
-    .datetime .time {
-      font-size: 1.3rem;
-      font-weight: 600;
+      justify-content: flex-start;
+      height: 100vh;
+      padding: 20px;
     }
 
     h1 {
-      margin-top: 15px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      z-index: 2;
+      font-size: 22px;
+      margin-top: 10px;
+      color: #444;
+      letter-spacing: 0.5px;
     }
 
-    .button-group {
+    h2 {
+      margin-top: 4px;
+      font-size: 16px;
+      color: #888;
+      font-weight: 500;
+    }
+
+    p.subtitle {
+      margin: 20px 0 10px;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .container {
       display: flex;
       flex-direction: column;
-      gap: 25px;
-      z-index: 2;
-      margin-top: 40px;
+      gap: 14px;
+      width: 90%;
+      max-width: 420px;
     }
 
-    .btn {
-      padding: 12px 28px;
-      border: none;
-      border-radius: 20px;
-      font-size: 1rem;
+    .mood-box {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: all 0.3s ease;
       cursor: pointer;
-      transition: 0.3s;
-      background-color: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
     }
 
-    .btn:hover {
-      transform: scale(1.05);
-      background-color: rgba(255, 255, 255, 0.9);
+    .mood-box:hover {
+      transform: scale(1.03);
     }
 
-    .quote-section {
-      margin-top: 10px;
-      font-size: 0.95rem;
-      font-style: italic;
+    .mood-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 6px;
+    }
+
+    .quote {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.5;
       display: none;
-      animation: fadeIn 0.8s ease forwards;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .quote.show {
+      display: block;
+      opacity: 1;
+      margin-top: 8px;
     }
 
-    .footer {
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      opacity: 0.7;
-      z-index: 2;
+    footer {
+      position: absolute;
+      bottom: 16px;
+      font-size: 13px;
+      color: #555;
+      text-align: center;
     }
   </style>
 </head>
-
 <body>
-  <!-- Floating emoji -->
-  <div class="emoji-bg">
-    <span style="left: 10%; animation-delay: 0s;">💌</span>
-    <span style="left: 25%; animation-delay: 2s;">💕</span>
-    <span style="left: 40%; animation-delay: 4s;">💖</span>
-    <span style="left: 60%; animation-delay: 6s;">💘</span>
-    <span style="left: 80%; animation-delay: 8s;">🌸</span>
-  </div>
+  <h1 id="date"></h1>
+  <h2 id="time"></h2>
+  <p class="subtitle">Open this when you feel...</p>
 
-  <!-- DateTime -->
-  <div class="datetime" id="datetime"></div>
-
-  <h1>open this when you feel..</h1>
-
-  <div class="button-group">
-    <div>
-      <button class="btn" onclick="showQuote('happy')">happy</button>
-      <div id="happyQuote" class="quote-section"></div>
+  <div class="container">
+    <div class="mood-box" id="happy">
+      <div class="mood-title">Happy 😊</div>
+      <div class="quote"></div>
     </div>
 
-    <div>
-      <button class="btn" onclick="showQuote('tired')">tired</button>
-      <div id="tiredQuote" class="quote-section"></div>
+    <div class="mood-box" id="tired">
+      <div class="mood-title">Tired 😴</div>
+      <div class="quote"></div>
     </div>
 
-    <div>
-      <button class="btn" onclick="showQuote('sad')">sad</button>
-      <div id="sadQuote" class="quote-section"></div>
+    <div class="mood-box" id="sad">
+      <div class="mood-title">Sad 😢</div>
+      <div class="quote"></div>
     </div>
   </div>
 
-  <div class="footer">made with love, for the one i love.</div>
+  <footer>Made with love, for the one I love. ❤️</footer>
 
   <script>
-    // === REAL TIME CLOCK ===
+    // Date + Time Display
     function updateDateTime() {
       const now = new Date();
-      const dayName = now.toLocaleDateString('en-US', { weekday: 'long' });
-      const date = now.getDate().toString().padStart(2, '0');
-      const month = now.toLocaleDateString('en-US', { month: 'long' });
-      const year = now.getFullYear();
-      const time = now.toLocaleTimeString('en-GB'); // 24h format
-
-      document.getElementById("datetime").innerHTML = 
-        `${dayName} ${date} ${month} ${year}<br><span class="time">${time}</span>`;
+      const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      document.getElementById("date").textContent =
+        `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+      document.getElementById("time").textContent =
+        now.toLocaleTimeString("en-GB", { hour12: false });
     }
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    // === QUOTES ===
-    const happyQuotesByDay = {
-      1: ["Monday: You shine brighter than the sun today."],
-      2: ["Tuesday: Your smile could heal the world."],
-      3: ["Wednesday: You deserve all the joy today."],
-      4: ["Thursday: Keep glowing, you’re unstoppable."],
-      5: ["Friday: Let happiness be your favorite outfit."],
-      6: ["Saturday: You’re the reason weekends are magical."],
-      7: ["Sunday: Rest easy, love. You’ve done so well."]
+    // Quotes per day (1–7)
+    const happyQuotes = {
+      1: "Even the smallest smile can light an entire room.",
+      2: "Your joy is contagious—let it fill the air.",
+      3: "Today is proof that love still blooms quietly.",
+      4: "Happiness hides in the simplest moments.",
+      5: "Your heart was made to glow softly, not to burn.",
+      6: "Let laughter rest gently upon your soul.",
+      7: "You are sunlight disguised as a heartbeat."
     };
 
-    const tiredQuotesByDay = {
-      1: ["Monday: It’s okay to rest, even stars need to recharge."],
-      2: ["Tuesday: You’ve done your best, breathe and let go."],
-      3: ["Wednesday: Don’t rush, love. Peace is progress too."],
-      4: ["Thursday: Rest is part of the journey, not the end."],
-      5: ["Friday: Close your eyes and let calm find you."],
-      6: ["Saturday: You’ve earned a break, my love."],
-      7: ["Sunday: Don’t push today, just exist beautifully."]
+    const tiredQuotes = {
+      1: "You don’t have to bloom every day; resting is also living.",
+      2: "The stars are proof that darkness can still shine.",
+      3: "Close your eyes—some answers only come in silence.",
+      4: "Even flowers lean toward rest before they grow again.",
+      5: "Let the world spin without you for a moment.",
+      6: "You’ve done enough; let your soul breathe.",
+      7: "The night holds you gently—breathe and stay still."
     };
 
-    const sadQuotesByDay = {
-      1: ["Monday: It’s okay to cry, but don’t forget to smile again."],
-      2: ["Tuesday: I wish I could hold you until it hurts less."],
-      3: ["Wednesday: Even rainbows need rain, my love."],
-      4: ["Thursday: You are loved, even when you feel alone."],
-      5: ["Friday: You’re stronger than your sadness."],
-      6: ["Saturday: I’m proud of you for enduring."],
-      7: ["Sunday: This too shall pass, my dearest."]
+    const sadQuotes = {
+      1: "Sometimes, hearts speak louder when they break quietly.",
+      2: "Tears are not weakness; they’re how the soul exhales.",
+      3: "You are allowed to outgrow the versions of you that hurt.",
+      4: "Even the moon has nights it doesn’t feel whole.",
+      5: "Some endings are really beginnings that forgot to smile.",
+      6: "Your sadness is valid, but it doesn’t define your story.",
+      7: "One day, this ache will become a poem that saves someone else."
     };
 
-    function getTodayDay() {
-      return new Date().getDay() === 0 ? 7 : new Date().getDay();
+    // Get today (1–7)
+    function getToday() {
+      const day = new Date().getDay();
+      return day === 0 ? 7 : day;
     }
 
-    function getTodayIndex() {
-      return new Date().getDate() - 1;
+    // Display quotes
+    function showQuotes() {
+      const today = getToday();
+      document.querySelector("#happy .quote").textContent = happyQuotes[today];
+      document.querySelector("#tired .quote").textContent = tiredQuotes[today];
+      document.querySelector("#sad .quote").textContent = sadQuotes[today];
     }
+    showQuotes();
 
-    function showQuote(feeling) {
-      const day = getTodayDay();
-      let quote = "No quote for today yet.";
-
-      const sections = {
-        happy: document.getElementById("happyQuote"),
-        tired: document.getElementById("tiredQuote"),
-        sad: document.getElementById("sadQuote"),
-      };
-
-      const section = sections[feeling];
-      const isVisible = section.style.display === "block";
-
-      Object.values(sections).forEach(s => s.style.display = "none");
-
-      if (isVisible) {
-        section.style.display = "none";
-        return;
-      }
-
-      if (feeling === "happy" && happyQuotesByDay[day]) {
-        quote = happyQuotesByDay[day][getTodayIndex() % happyQuotesByDay[day].length];
-      } else if (feeling === "tired" && tiredQuotesByDay[day]) {
-        quote = tiredQuotesByDay[day][getTodayIndex() % tiredQuotesByDay[day].length];
-      } else if (feeling === "sad" && sadQuotesByDay[day]) {
-        quote = sadQuotesByDay[day][getTodayIndex() % sadQuotesByDay[day].length];
-      }
-
-      section.textContent = quote;
-      section.style.display = "block";
-    }
+    // Toggle show/hide quote on click
+    document.querySelectorAll(".mood-box").forEach(box => {
+      const quote = box.querySelector(".quote");
+      box.addEventListener("click", () => {
+        quote.classList.toggle("show");
+      });
+    });
   </script>
 </body>
 </html>
