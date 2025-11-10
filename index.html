@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Love Quotes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Quotes for Ninda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -14,123 +14,120 @@
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #fbd3e9, #bb377d);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
+      background: linear-gradient(to bottom right, #fbd3e9, #bb377d);
+      color: #432c56;
       overflow-x: hidden;
+      position: relative;
     }
 
-    .emoji-bg {
+    .emoji-bg span {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      font-size: 2rem;
+      opacity: 0.15;
+      animation: floatAround 15s linear infinite;
       z-index: -1;
-      font-size: 2.5rem;
-      opacity: 0.05;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      animation: float 40s linear infinite alternate-reverse;
-      pointer-events: none;
     }
 
-    @keyframes float {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(20px, -20px); }
-      100% { transform: translate(-20px, 20px); }
+    @keyframes floatAround {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(50px, -60px) rotate(45deg); }
+      50% { transform: translate(-40px, -100px) rotate(90deg); }
+      75% { transform: translate(-60px, 40px) rotate(135deg); }
+      100% { transform: translate(0, 0) rotate(180deg); }
     }
 
     .datetime {
       text-align: center;
-      color: #4b0082;
+      font-weight: 600;
       font-size: 1rem;
-      margin-top: 30px;
-      line-height: 1.4;
+      margin-top: 20px;
+      color: #4b0082;
+      line-height: 1.6;
     }
 
     h1 {
-      font-size: 1.5rem;
       text-align: center;
-      color: #4b0082;
+      font-size: 1.8rem;
       font-weight: 700;
-      margin-top: 15px;
+      margin-top: 10px;
+      margin-bottom: 2.5rem;
+      color: #4b0082;
     }
 
     .button-group {
-      width: 100%;
-      padding: 0 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
-      margin-top: 20px;
+      gap: 25px;
+      margin-bottom: 50px;
     }
 
     .btn {
-      padding: 15px 30px;
+      padding: 12px 30px;
       font-size: 1.2rem;
       border: none;
       border-radius: 30px;
       font-weight: bold;
       color: white;
       cursor: pointer;
-      width: 90%;
-      max-width: 300px;
-      transition: all 0.3s ease;
+      width: 220px;
+      transition: transform 0.2s ease, opacity 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
     }
 
     .happy-btn { background-color: #c087f7; }
     .tired-btn { background-color: #f55d5d; }
-    .sad-btn   { background-color: #5d55f5; }
+    .sad-btn { background-color: #5d55f5; }
 
     .quote-section {
-      max-width: 90%;
+      max-width: 80%;
       margin: 0 auto;
       padding: 20px;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255,255,255,0.75);
       border-radius: 20px;
       font-size: 1rem;
       color: #333;
       display: none;
+      text-align: center;
+      animation: fadeIn 0.7s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .footer {
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-style: italic;
       color: #4b0082;
-      margin-bottom: 20px;
+      margin-bottom: 1.2rem;
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 1.3rem;
-      }
-
       .btn {
+        width: 90%;
         font-size: 1rem;
       }
-
       .quote-section {
-        font-size: 0.95rem;
+        max-width: 90%;
       }
     }
   </style>
 </head>
 <body>
   <div class="emoji-bg">
-    💌💕💞💓💖💝💘🩷🤍🩶🖤🤎💜💙🩵💚💛🧡❤️💐🌹🌺🌷🪷🌸💮🏵️🪻🌻🌼🍄☘️🍀🌿👩🏻‍❤️‍💋‍👨🏻🫶😻😍🥰😘😗
+    <span>💌</span><span>💕</span><span>💞</span><span>💖</span><span>💘</span><span>💐</span><span>🌹</span><span>🌸</span><span>😍</span><span>🩷</span>
   </div>
 
   <div class="datetime" id="datetime"></div>
 
-  <h1>Open this when you feel..</h1>
+  <h1>open this when you feel..</h1>
 
   <div class="button-group">
     <button class="btn happy-btn" onclick="showQuote('happy')">H A P P Y 😊</button>
@@ -143,55 +140,54 @@
     <div id="sadQuote" class="quote-section"></div>
   </div>
 
-  <div class="footer">Made with love, for the one I love 💌</div>
+  <div class="footer">
+    made with love, for the one i love 💌
+  </div>
 
   <script>
     const happyQuotesByDay = {
-      1: ["Happy Monday 🥰", "You shine brighter than the sun sayangg! 😘"],
-      2: ["Happy Tuesday 😍", "Your smile lights up my world baby! 🌟"],
-      3: ["Happy Wednesday 💖", "Midweek made magical by you 💫"],
-      4: ["Happy Thursday 💕", "You're amazing, always! 🌈"],
-      5: ["Happy Friday 😘", "End of week, full of love! 💋"],
-      6: ["Happy Saturday 💝", "Wishing you a joyful weekend,met rehat baby! 😇"],
-      7: ["Happy Sunday 💗", "Relax & be happy, love! 🌤️"]
+      1: ["Keep smiling, beautiful. Mondays are for fresh starts 🌸"],
+      2: ["Your smile is brighter than any Tuesday sun ☀️"],
+      3: ["Midweek glow looks best on you ✨"],
+      4: ["Thursday magic is all around you 💫"],
+      5: ["It’s Friday! You deserve happiness, always 💕"],
+      6: ["Weekend joy suits you so well 🌹"],
+      7: ["Sunday peace and love surround your heart 🌼"]
     };
 
     const tiredQuotesByDay = {
-      1: ["Tired Monday 😴", "Take a deep breath, you got this! 💪"],
-      2: ["Tired Tuesday 😓", "Rest, sayang. I'm here for you 🫶"],
-      3: ["Tired Wednesday 😩", "You deserve a break and cuddles 💤"],
-      4: ["Tired Thursday 🥱", "Power through, you're doing great!"],
-      5: ["Tired Friday 😌", "Almost weekend, semangat terus ya!"],
-      6: ["Tired Saturday 😶‍🌫️", "Enjoy some peace today 💆‍♀️"],
-      7: ["Tired Sunday 🥹", "Recharge well, you’re precious 🧸"]
+      1: ["Even the sun rests at night. So can you 🌙"],
+      2: ["You did enough today. Rest, my love 🤍"],
+      3: ["Take a breath. You’re doing amazing 💫"],
+      4: ["Your effort is beautiful, even when you’re tired 🌷"],
+      5: ["Friday’s exhaustion means you gave your all 💪"],
+      6: ["Rest isn’t lazy — it’s self-love 🌿"],
+      7: ["Slow down, sweetheart. You deserve rest ☁️"]
     };
 
     const sadQuotesByDay = {
-      1: ["Sad Monday 😢", "I’m hugging you from here 🤗"],
-      2: ["Sad Tuesday 😞", "You are loved more than you know 💌"],
-      3: ["Sad Wednesday 😔", "Rainy days bring flowers soon, its ok darling, everything gonna be okay🌧️🌷"],
-      4: ["Sad Thursday 🥺", "I’m here, always 🌙"],
-      5: ["Sad Friday 😿", "Cry if you need, I’ll listen 🎧"],
-      6: ["Sad Saturday 😭", "Let's turn that frown into a smile ☀️"],
-      7: ["Sad Sunday 😣", "New week coming, new hope too 💖"]
+      1: ["It’s okay to not be okay. I’m with you always 💗"],
+      2: ["Crying doesn’t make you weak — it means you feel deeply 💧"],
+      3: ["Even the rain stops someday. So will this pain 🌦️"],
+      4: ["You’re stronger than the sadness you feel today 💜"],
+      5: ["Let the tears fall, love will dry them 💞"],
+      6: ["Tomorrow will be softer, I promise 🌤️"],
+      7: ["Even broken hearts still beat beautifully 💖"]
     };
 
     function getTodayDay() {
-      const day = new Date().getDay();
-      return day === 0 ? 7 : day; // 1 = Monday
+      const d = new Date();
+      const day = d.getDay();
+      return day === 0 ? 7 : day; // 1 = Monday, 7 = Sunday
     }
 
     function showQuote(feeling) {
       const day = getTodayDay();
-      let quote = "Belum ada quote hari ini.";
+      let quote = "No quote available today.";
 
-      if (feeling === "happy" && happyQuotesByDay[day]) {
-        quote = happyQuotesByDay[day][0];
-      } else if (feeling === "tired" && tiredQuotesByDay[day]) {
-        quote = tiredQuotesByDay[day][0];
-      } else if (feeling === "sad" && sadQuotesByDay[day]) {
-        quote = sadQuotesByDay[day][0];
-      }
+      if (feeling === "happy" && happyQuotesByDay[day]) quote = happyQuotesByDay[day][0];
+      else if (feeling === "tired" && tiredQuotesByDay[day]) quote = tiredQuotesByDay[day][0];
+      else if (feeling === "sad" && sadQuotesByDay[day]) quote = sadQuotesByDay[day][0];
 
       document.getElementById("happyQuote").style.display = "none";
       document.getElementById("tiredQuote").style.display = "none";
@@ -202,19 +198,22 @@
       section.style.display = "block";
     }
 
-    // Realtime date & time
+    // Real-time date & time
     function updateDateTime() {
       const now = new Date();
-      const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-      const day = days[now.getDay() === 0 ? 6 : now.getDay() - 1];
-      const date = now.toLocaleDateString("en-GB").replaceAll("/", " ");
-      const time = now.toLocaleTimeString("en-GB");
+      const dayName = now.toLocaleDateString("en-US", { weekday: "long" });
+      const date = now.getDate().toString().padStart(2, '0');
+      const month = now.toLocaleDateString("en-US", { month: "long" });
+      const year = now.getFullYear();
+      const time = now.toLocaleTimeString("en-GB", { hour12: false });
 
-      document.getElementById("datetime").innerHTML = `${day} ${date} ${time}`;
+      document.getElementById("datetime").innerHTML = `
+        ${dayName} ${date} ${month} ${year}<br>${time}
+      `;
     }
-
     setInterval(updateDateTime, 1000);
     updateDateTime();
   </script>
 </body>
 </html>
+
