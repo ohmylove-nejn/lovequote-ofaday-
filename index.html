@@ -3,97 +3,106 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Love Quotes for Ninda</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Love Quotes of a Day 💌</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #fbd3e9, #bb377d);
-      color: #432c56;
-      overflow-x: hidden;
+      background: linear-gradient(135deg, #f9e3f2, #e0c3fc);
+      color: #4b0082;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
       position: relative;
+      text-align: center;
+    }
+
+    .emoji-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
     }
 
     .emoji-bg span {
-      position: fixed;
-      font-size: 2rem;
-      opacity: 0.15;
-      animation: floatAround 15s linear infinite;
-      z-index: -1;
+      position: absolute;
+      animation: float 12s infinite ease-in-out;
+      opacity: 0.7;
     }
 
-    @keyframes floatAround {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(50px, -60px) rotate(45deg); }
-      50% { transform: translate(-40px, -100px) rotate(90deg); }
-      75% { transform: translate(-60px, 40px) rotate(135deg); }
-      100% { transform: translate(0, 0) rotate(180deg); }
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+      25% { opacity: 1; }
+      50% { transform: translateY(50vh) translateX(20px); }
+      75% { opacity: 1; }
+      100% { transform: translateY(-10vh) translateX(-20px); opacity: 0; }
     }
 
     .datetime {
-      text-align: center;
-      font-weight: 600;
+      margin-top: 30px;
+      line-height: 1.5;
+      font-weight: 500;
       font-size: 1rem;
-      margin-top: 20px;
-      color: #4b0082;
-      line-height: 1.6;
+      z-index: 2;
+    }
+
+    .datetime .time {
+      font-size: 1.3rem;
+      font-weight: 600;
     }
 
     h1 {
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-top: 10px;
-      margin-bottom: 2.5rem;
-      color: #4b0082;
+      margin-top: 15px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      z-index: 2;
     }
 
     .button-group {
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 25px;
-      margin-bottom: 50px;
+      z-index: 2;
+      margin-top: 40px;
     }
 
     .btn {
-      padding: 12px 30px;
-      font-size: 1.2rem;
+      padding: 12px 28px;
       border: none;
-      border-radius: 30px;
-      font-weight: bold;
-      color: white;
+      border-radius: 20px;
+      font-size: 1rem;
       cursor: pointer;
-      width: 220px;
-      transition: transform 0.2s ease, opacity 0.3s;
+      transition: 0.3s;
+      background-color: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
     }
 
     .btn:hover {
       transform: scale(1.05);
-      opacity: 0.9;
+      background-color: rgba(255, 255, 255, 0.9);
     }
 
-    .happy-btn { background-color: #c087f7; }
-    .tired-btn { background-color: #f55d5d; }
-    .sad-btn { background-color: #5d55f5; }
-
     .quote-section {
-      max-width: 80%;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: rgba(255,255,255,0.75);
-      border-radius: 20px;
-      font-size: 1rem;
-      color: #333;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      font-style: italic;
       display: none;
-      text-align: center;
-      animation: fadeIn 0.7s ease forwards;
+      animation: fadeIn 0.8s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -102,117 +111,135 @@
     }
 
     .footer {
-      text-align: center;
+      margin-bottom: 20px;
       font-size: 0.9rem;
-      font-style: italic;
-      color: #4b0082;
-      margin-bottom: 1.2rem;
-    }
-
-    @media (max-width: 480px) {
-      .btn {
-        width: 90%;
-        font-size: 1rem;
-      }
-      .quote-section {
-        max-width: 90%;
-      }
+      font-weight: 500;
+      opacity: 0.7;
+      z-index: 2;
     }
   </style>
 </head>
+
 <body>
+  <!-- Floating emoji -->
   <div class="emoji-bg">
-    <span>💌</span><span>💕</span><span>💞</span><span>💖</span><span>💘</span><span>💐</span><span>🌹</span><span>🌸</span><span>😍</span><span>🩷</span>
+    <span style="left: 10%; animation-delay: 0s;">💌</span>
+    <span style="left: 25%; animation-delay: 2s;">💕</span>
+    <span style="left: 40%; animation-delay: 4s;">💖</span>
+    <span style="left: 60%; animation-delay: 6s;">💘</span>
+    <span style="left: 80%; animation-delay: 8s;">🌸</span>
   </div>
 
+  <!-- DateTime -->
   <div class="datetime" id="datetime"></div>
 
   <h1>open this when you feel..</h1>
 
   <div class="button-group">
-    <button class="btn happy-btn" onclick="showQuote('happy')">H A P P Y 😊</button>
-    <div id="happyQuote" class="quote-section"></div>
+    <div>
+      <button class="btn" onclick="showQuote('happy')">happy</button>
+      <div id="happyQuote" class="quote-section"></div>
+    </div>
 
-    <button class="btn tired-btn" onclick="showQuote('tired')">T I R E D 😥</button>
-    <div id="tiredQuote" class="quote-section"></div>
+    <div>
+      <button class="btn" onclick="showQuote('tired')">tired</button>
+      <div id="tiredQuote" class="quote-section"></div>
+    </div>
 
-    <button class="btn sad-btn" onclick="showQuote('sad')">S A D 😢</button>
-    <div id="sadQuote" class="quote-section"></div>
+    <div>
+      <button class="btn" onclick="showQuote('sad')">sad</button>
+      <div id="sadQuote" class="quote-section"></div>
+    </div>
   </div>
 
-  <div class="footer">
-    made with love, for the one i love 💌
-  </div>
+  <div class="footer">made with love, for the one i love.</div>
 
   <script>
+    // === REAL TIME CLOCK ===
+    function updateDateTime() {
+      const now = new Date();
+      const dayName = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const date = now.getDate().toString().padStart(2, '0');
+      const month = now.toLocaleDateString('en-US', { month: 'long' });
+      const year = now.getFullYear();
+      const time = now.toLocaleTimeString('en-GB'); // 24h format
+
+      document.getElementById("datetime").innerHTML = 
+        `${dayName} ${date} ${month} ${year}<br><span class="time">${time}</span>`;
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // === QUOTES ===
     const happyQuotesByDay = {
-      1: ["Keep smiling, beautiful. Mondays are for fresh starts 🌸"],
-      2: ["Your smile is brighter than any Tuesday sun ☀️"],
-      3: ["Midweek glow looks best on you ✨"],
-      4: ["Thursday magic is all around you 💫"],
-      5: ["It’s Friday! You deserve happiness, always 💕"],
-      6: ["Weekend joy suits you so well 🌹"],
-      7: ["Sunday peace and love surround your heart 🌼"]
+      1: ["Monday: You shine brighter than the sun today."],
+      2: ["Tuesday: Your smile could heal the world."],
+      3: ["Wednesday: You deserve all the joy today."],
+      4: ["Thursday: Keep glowing, you’re unstoppable."],
+      5: ["Friday: Let happiness be your favorite outfit."],
+      6: ["Saturday: You’re the reason weekends are magical."],
+      7: ["Sunday: Rest easy, love. You’ve done so well."]
     };
 
     const tiredQuotesByDay = {
-      1: ["Even the sun rests at night. So can you 🌙"],
-      2: ["You did enough today. Rest, my love 🤍"],
-      3: ["Take a breath. You’re doing amazing 💫"],
-      4: ["Your effort is beautiful, even when you’re tired 🌷"],
-      5: ["Friday’s exhaustion means you gave your all 💪"],
-      6: ["Rest isn’t lazy — it’s self-love 🌿"],
-      7: ["Slow down, sweetheart. You deserve rest ☁️"]
+      1: ["Monday: It’s okay to rest, even stars need to recharge."],
+      2: ["Tuesday: You’ve done your best, breathe and let go."],
+      3: ["Wednesday: Don’t rush, love. Peace is progress too."],
+      4: ["Thursday: Rest is part of the journey, not the end."],
+      5: ["Friday: Close your eyes and let calm find you."],
+      6: ["Saturday: You’ve earned a break, my love."],
+      7: ["Sunday: Don’t push today, just exist beautifully."]
     };
 
     const sadQuotesByDay = {
-      1: ["It’s okay to not be okay. I’m with you always 💗"],
-      2: ["Crying doesn’t make you weak — it means you feel deeply 💧"],
-      3: ["Even the rain stops someday. So will this pain 🌦️"],
-      4: ["You’re stronger than the sadness you feel today 💜"],
-      5: ["Let the tears fall, love will dry them 💞"],
-      6: ["Tomorrow will be softer, I promise 🌤️"],
-      7: ["Even broken hearts still beat beautifully 💖"]
+      1: ["Monday: It’s okay to cry, but don’t forget to smile again."],
+      2: ["Tuesday: I wish I could hold you until it hurts less."],
+      3: ["Wednesday: Even rainbows need rain, my love."],
+      4: ["Thursday: You are loved, even when you feel alone."],
+      5: ["Friday: You’re stronger than your sadness."],
+      6: ["Saturday: I’m proud of you for enduring."],
+      7: ["Sunday: This too shall pass, my dearest."]
     };
 
     function getTodayDay() {
-      const d = new Date();
-      const day = d.getDay();
-      return day === 0 ? 7 : day; // 1 = Monday, 7 = Sunday
+      return new Date().getDay() === 0 ? 7 : new Date().getDay();
+    }
+
+    function getTodayIndex() {
+      return new Date().getDate() - 1;
     }
 
     function showQuote(feeling) {
       const day = getTodayDay();
-      let quote = "No quote available today.";
+      let quote = "No quote for today yet.";
 
-      if (feeling === "happy" && happyQuotesByDay[day]) quote = happyQuotesByDay[day][0];
-      else if (feeling === "tired" && tiredQuotesByDay[day]) quote = tiredQuotesByDay[day][0];
-      else if (feeling === "sad" && sadQuotesByDay[day]) quote = sadQuotesByDay[day][0];
+      const sections = {
+        happy: document.getElementById("happyQuote"),
+        tired: document.getElementById("tiredQuote"),
+        sad: document.getElementById("sadQuote"),
+      };
 
-      document.getElementById("happyQuote").style.display = "none";
-      document.getElementById("tiredQuote").style.display = "none";
-      document.getElementById("sadQuote").style.display = "none";
+      const section = sections[feeling];
+      const isVisible = section.style.display === "block";
 
-      const section = document.getElementById(feeling + "Quote");
+      Object.values(sections).forEach(s => s.style.display = "none");
+
+      if (isVisible) {
+        section.style.display = "none";
+        return;
+      }
+
+      if (feeling === "happy" && happyQuotesByDay[day]) {
+        quote = happyQuotesByDay[day][getTodayIndex() % happyQuotesByDay[day].length];
+      } else if (feeling === "tired" && tiredQuotesByDay[day]) {
+        quote = tiredQuotesByDay[day][getTodayIndex() % tiredQuotesByDay[day].length];
+      } else if (feeling === "sad" && sadQuotesByDay[day]) {
+        quote = sadQuotesByDay[day][getTodayIndex() % sadQuotesByDay[day].length];
+      }
+
       section.textContent = quote;
       section.style.display = "block";
     }
-
-    // Real-time date & time
-    function updateDateTime() {
-      const now = new Date();
-      const dayName = now.toLocaleDateString("en-US", { weekday: "long" });
-      const date = now.getDate().toString().padStart(2, '0');
-      const month = now.toLocaleDateString("en-US", { month: "long" });
-      const year = now.getFullYear();
-      const time = now.toLocaleTimeString("en-GB", { hour12: false });
-
-      document.getElementById("datetime").innerHTML = `
-        ${dayName} ${date} ${month} ${year}<br>${time}
-      `;
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
   </script>
 </body>
 </html>
