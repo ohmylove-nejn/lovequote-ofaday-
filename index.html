@@ -3,211 +3,83 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Love Quotes Dashboard — Ninda (fixed)</title>
-  <meta name="description" content="Aesthetic quote dashboard with animated text and corrected spacing, centered layout and mood colors." />
+  <title>Love Quotes Dashboard — Fixed Center</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ================= VARIABLES & BASE ================= */
     :root{
-      --bg1: #ffeef6;
-      --bg2: #eaf6ff;
-      --bg3: #f3e9ff;
-      --accent: #6b2ab0;
-      --card-bg: rgba(255,255,255,0.06);
-      --card-blur: 6px;
-      --radius: 18px;
-      --shadow: 0 22px 44px rgba(80,30,110,0.08);
-      --max-width: 820px;
-      --gap: 22px;
-      --char-delay: 0.028s; /* per-char animation delay */
-      --float-duration: 6s;
+      --bg1:#ffeef6; --bg2:#eaf6ff; --bg3:#f3e9ff;
+      --accent:#6b2ab0;
+      --max-width:820px;
+      --radius:18px;
+      --card-shadow: 0 22px 44px rgba(80,30,110,0.08);
+      --char-delay: 0.028s;
+      --float-duration:6s;
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    html,body{height:100%;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;-webkit-font-smoothing:antialiased;}
     body{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
-      padding:24px;
-      color:#221b2b;
-      overflow:auto;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3));
+      padding:24px;color:#221b2b;overflow:auto;
     }
 
-    /* ================ Animated Background ================ */
-    .animated-bg{
-      position:fixed; inset:0; z-index:0;
-      background: linear-gradient(60deg,#ffd6eb 0%, #d6faff 45%, #ffe8f2 100%);
-      background-size:300% 300%;
-      animation: bgShift 18s ease infinite;
-      filter:saturate(1.02);
-    }
-    @keyframes bgShift{
-      0%{background-position:0% 50%}
-      50%{background-position:100% 50%}
-      100%{background-position:0% 50%}
-    }
+    /* animated bg */
+    .animated-bg{position:fixed;inset:0;z-index:0;background:linear-gradient(60deg,#ffd6eb 0%,#d6faff 45%,#ffe8f2 100%);background-size:300% 300%;animation:bgShift 18s ease infinite;filter:saturate(1.02)}
+    @keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-    /* ================ Wrapper centered ================ */
-    .wrap{
-      position:relative; z-index:2;
-      width:100%; max-width:var(--max-width);
-      margin:0 auto;
-      display:flex; flex-direction:column; align-items:center; gap:var(--gap);
-      padding:24px;
-    }
+    /* container centered */
+    .wrap{position:relative;z-index:2;width:100%;max-width:var(--max-width);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px;padding:18px;}
 
-    /* ================ Header ================ */
-    .header{ text-align:center; margin-top:6px; }
-    .date { color:var(--accent); font-weight:600; font-size:1rem; }
-    .time { font-weight:700; font-size:1.4rem; color:#2f1f36; margin-top:6px; }
-    .title { font-size:1.8rem; font-weight:700; color:#2e1630; margin-top:8px; line-height:1.05; }
+    /* header */
+    .header{text-align:center}
+    .date{color:var(--accent);font-weight:600;font-size:1rem}
+    .time{font-weight:700;font-size:1.3rem;margin-top:6px;color:#2f1f36}
+    .title{font-size:1.6rem;font-weight:700;color:#2e1630;margin-top:8px;line-height:1.05}
 
-    /* ================ Controls (buttons + cards) ================ */
-    .controls{
-      width:100%;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:18px;
-      margin-top:8px;
-    }
-
-    .btn-row{
-      display:flex;
-      gap:18px;
-      width:100%;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
-
+    /* controls (centered) */
+    .controls{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:6px}
+    .btn-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
     .mood-btn{
-      min-width:180px;
-      max-width:320px;
-      padding:14px 20px;
-      border-radius:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
-      border:1px solid rgba(120,80,160,0.08);
-      box-shadow: 0 10px 26px rgba(80,30,110,0.06);
-      font-weight:700; color:#5a2e6f; font-size:1rem; cursor:pointer;
-      text-align:center;
+      min-width:150px;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,#fff,#fbfbfb);
+      border:1px solid rgba(120,80,160,0.08);box-shadow:0 8px 24px rgba(80,30,110,0.06);font-weight:700;color:#5a2e6f;cursor:pointer;
     }
-    .mood-btn:active{ transform: translateY(2px); }
-    .mood-btn:focus{ outline:3px solid rgba(107,42,176,0.12); transform: translateY(-4px); }
+    .mood-btn:active{transform:translateY(2px)}.mood-btn:focus{outline:3px solid rgba(107,42,176,0.12)}
 
-    /* ================ Quote card (image-focused) ================ */
-    .card-wrap{
-      width:100%;
-      display:flex;
-      justify-content:center;
-      margin-top:6px;
-    }
+    /* single centered quote card */
+    .card-center{width:100%;display:flex;justify-content:center}
     .quote{
-      width:100%;
-      max-width:640px;
-      min-height:260px;
-      border-radius:18px;
-      overflow:hidden;
-      position:relative;
-      display:none; /* show via .show */
-      box-shadow: var(--shadow);
-      transform-origin:center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(11,6,15,0.03));
-      backdrop-filter: blur(var(--card-blur));
+      width:100%;max-width:640px;min-height:240px;border-radius:16px;overflow:hidden;position:relative;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      box-shadow:var(--card-shadow);display:none;transform-origin:center;
     }
-    .quote.show{
-      display:block;
-      animation: cardIn .45s cubic-bezier(.2,.9,.2,1) both;
-    }
-    @keyframes cardIn{
-      from{ opacity:0; transform: translateY(12px) scale(.996); }
-      to{ opacity:1; transform: translateY(0) scale(1); }
-    }
+    .quote.show{display:block;animation:cardIn .45s cubic-bezier(.2,.9,.2,1) both}
+    @keyframes cardIn{from{opacity:0;transform:translateY(12px) scale(.996)}to{opacity:1;transform:translateY(0) scale(1)}}
 
-    .card-media{ position:absolute; inset:0; background-size:cover; background-position:center; filter: saturate(0.98) contrast(1.02); }
-    .card-overlay{
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.04) 55%, rgba(255,255,255,0.02) 100%);
-      mix-blend-mode: normal;
-    }
-    .card-content{
-      position:relative; z-index:3;
-      min-height:100%;
-      display:flex; align-items:center; justify-content:center; text-align:center;
-      padding:28px;
-    }
+    .card-media{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(0.98) contrast(1.02)}
+    .card-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.14) 0%, rgba(0,0,0,0.02) 60%);mix-blend-mode:normal}
+    .card-content{position:relative;z-index:2;min-height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:26px}
 
-    /* moving text block */
-    .moving-text{
-      display:inline-block;
-      max-width:88%;
-      font-size:1.02rem;
-      line-height:1.6;
-      font-weight:500;
-      text-wrap:balance;
-      word-break:break-word;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+    /* moving text - use per-word/char approach but preserve spaces */
+    .moving-text{display:inline-block;max-width:90%;font-size:1.02rem;line-height:1.6;font-weight:500}
+    .moving-text .char{display:inline-block;white-space:pre;opacity:0;transform:translateY(8px);animation-name:charIn;animation-duration:420ms;animation-fill-mode:forwards;animation-timing-function:cubic-bezier(.2,.9,.2,1)}
+    @keyframes charIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .moving-text.float-loop{animation:floatLoop var(--float-duration) ease-in-out infinite}
+    @keyframes floatLoop{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
 
-    /* per-character span */
-    .moving-text .char{
-      display:inline-block;
-      white-space:pre; /* preserve explicit spaces inside span textContent (we use NBSP for spaces) */
-      opacity:0;
-      transform: translateY(8px);
-      animation-name: charIn;
-      animation-duration: 420ms;
-      animation-fill-mode: forwards;
-      animation-timing-function: cubic-bezier(.2,.9,.2,1);
-    }
-    @keyframes charIn{
-      from{ opacity:0; transform: translateY(8px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
+    /* mood colors */
+    .text-happy{color:#fff8c6;text-shadow:0 6px 22px rgba(0,0,0,0.36)} /* pastel yellow */
+    .text-tired{color:#0b0b0b;text-shadow:0 6px 18px rgba(0,0,0,0.28)} /* near-black */
+    .text-sad{color:#031a3a;text-shadow:0 6px 18px rgba(0,0,0,0.28)} /* deep navy */
 
-    /* subtle float for the entire text block */
-    .moving-text.float-loop{ animation: floatLoop var(--float-duration) ease-in-out infinite; }
-    @keyframes floatLoop{
-      0%{ transform: translateY(0px); }
-      50%{ transform: translateY(-6px); }
-      100%{ transform: translateY(0px); }
-    }
+    .footer{margin-top:10px;color:#46374f;font-size:0.95rem;text-align:center}
 
-    /* mood color variants (text color) */
-    .text-happy{ color: #ffef9b; /* warm pastel yellow */ text-shadow: 0 6px 24px rgba(0,0,0,0.36);}
-    .text-tired{ color: #0b0b0b; /* near black for max contrast */ text-shadow: 0 6px 18px rgba(0,0,0,0.36);}
-    .text-sad{ color: #062a51; /* deep navy */ text-shadow: 0 6px 18px rgba(0,0,0,0.36);}
-
-    /* emojis inside card */
-    .card-emoji{ position:absolute; z-index:2; font-size:2.2rem; opacity:0.08; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.12)); }
-
-    /* footer */
-    .footer{ margin-top:8px; color:#46374f; font-size:0.95rem; z-index:3; text-align:center; }
-
-    /* responsive */
-    @media(max-width:740px){
-      .title{ font-size:1.4rem; }
-      .quote{ min-height:200px; border-radius:14px; }
-      .moving-text{ font-size:1rem; line-height:1.5; }
-    }
-    @media(max-width:420px){
-      .mood-btn{ min-width:140px; padding:12px 16px; font-size:0.95rem; }
-      .moving-text{ font-size:0.96rem; }
-    }
+    /* responsive tweaks */
+    @media(max-width:700px){.title{font-size:1.3rem}.quote{min-height:200px;border-radius:14px}.moving-text{font-size:1rem}}
+    @media(max-width:420px){.mood-btn{min-width:120px;padding:10px 12px;font-size:0.95rem}}
   </style>
 </head>
 <body>
   <div class="animated-bg" aria-hidden="true"></div>
-
-  <!-- background floating emojis (decorative) -->
-  <div class="emoji-layer" aria-hidden="true">
-    <span class="emoji eA" style="left:6%; top:12%;">💌</span>
-    <span class="emoji eB" style="left:22%; top:72%;">💗</span>
-    <span class="emoji eC" style="left:44%; top:30%;">🌸</span>
-    <span class="emoji eA" style="left:68%; top:18%;">💖</span>
-    <span class="emoji eB" style="left:86%; top:62%;">🩵</span>
-  </div>
 
   <main class="wrap" role="main" aria-labelledby="mainTitle">
     <header class="header" role="banner">
@@ -218,31 +90,17 @@
 
     <section class="controls" aria-label="mood controls">
       <div class="btn-row" role="group" aria-label="mood buttons">
-        <button id="btn-happy" class="mood-btn" aria-controls="q-happy" aria-expanded="false">happy</button>
-        <button id="btn-tired" class="mood-btn" aria-controls="q-tired" aria-expanded="false">tired</button>
-        <button id="btn-sad" class="mood-btn" aria-controls="q-sad" aria-expanded="false">sad</button>
+        <button id="btn-happy" class="mood-btn" aria-controls="card-quote" aria-expanded="false">happy</button>
+        <button id="btn-tired" class="mood-btn" aria-controls="card-quote" aria-expanded="false">tired</button>
+        <button id="btn-sad" class="mood-btn" aria-controls="card-quote" aria-expanded="false">sad</button>
       </div>
 
-      <div class="card-wrap" aria-hidden="false">
-        <article id="q-happy" class="quote" role="status" aria-hidden="true">
-          <div id="media-happy" class="card-media" aria-hidden="true"></div>
+      <div class="card-center" aria-hidden="false">
+        <!-- single quote card used for all moods to avoid empty placeholders -->
+        <article id="card-quote" class="quote" role="status" aria-hidden="true">
+          <div id="card-media" class="card-media" aria-hidden="true"></div>
           <div class="card-overlay" aria-hidden="true"></div>
           <div class="card-content"></div>
-          <div class="card-emoji" style="left:12%; top:12%;">✨</div>
-        </article>
-
-        <article id="q-tired" class="quote" role="status" aria-hidden="true">
-          <div id="media-tired" class="card-media" aria-hidden="true"></div>
-          <div class="card-overlay" aria-hidden="true"></div>
-          <div class="card-content"></div>
-          <div class="card-emoji" style="right:10%; bottom:12%;">🌙</div>
-        </article>
-
-        <article id="q-sad" class="quote" role="status" aria-hidden="true">
-          <div id="media-sad" class="card-media" aria-hidden="true"></div>
-          <div class="card-overlay" aria-hidden="true"></div>
-          <div class="card-content"></div>
-          <div class="card-emoji" style="left:10%; bottom:8%;">🌧️</div>
         </article>
       </div>
     </section>
@@ -250,9 +108,9 @@
     <div class="footer">made with love, for the one i love 💌</div>
   </main>
 
-  <script>
-  /* ================= QUOTES EXACT (from user) ================= */
-  const HAPPY = [
+<script>
+/* ================= QUOTES (exact user content) ================= */
+const HAPPY = [
 `You woke up today with that quiet joy, the kind that doesn’t need a reason. Just knowing you’re here makes everything feel lighter. ILY, sayang.`,
 `Even in small moments, like the sun on your face or the smell of coffee, I know you smile because something warm crosses your thoughts. I miss you, my love.`,
 `You laughed today, and for a second, it felt like the world paused just to let you feel that happiness. I love seeing you like that, cintaku.`,
@@ -262,7 +120,7 @@
 `By the end of today, I hope you remember that happiness isn’t about what happens around you, but about the love you carry in your heart. And my love will always be there too.`
 ];
 
-  const TIRED = [
+const TIRED = [
 `I know you’re tired in ways words can’t really explain, your body wants to rest, but your mind won’t stop. Rest easy, sayang, I’m always here for you. I love you.`,
 `Even the smallest things feel heavy sometimes, and I know you keep wondering how you’ll get through the day. You don’t have to face it alone, cintaku. I’m with you.`,
 `I can see the exhaustion behind your eyes, that quiet weight you carry without ever saying a word. I wish I could hold you now, sayang, and let you rest.`,
@@ -272,7 +130,7 @@
 `By tonight, I know you’re not just physically tired, but emotionally drained too. I wish I could help you rest from the inside out. I love you, always.`
 ];
 
-  const SAD = [
+const SAD = [
 `I know there’s an emptiness in you today, a hollow space where happiness used to be, and no one else seems to notice. But I do, sayang. I love you more than words.`,
 `Even when you laugh, I can tell it’s a little borrowed, like you’re trying to hide that quiet weight in your chest. I see you, cintaku, and I’ll never stop loving you.`,
 `There are moments you just want to disappear, not because you want to give up, but because everything feels so heavy. I’ll stay with you through it all, my love.`,
@@ -282,171 +140,120 @@
 `By night, when you lie awake, I know that sadness wraps around you like a blanket you never asked for. But I’ll be your warmth, my love, until you feel light again.`
 ];
 
-  /* =============== helper: date/time =============== */
-  const dateEl = document.getElementById('dateText');
-  const timeEl = document.getElementById('timeText');
-  function two(n){ return String(n).padStart(2,'0'); }
-  function formatTimeDot(d){ return `${two(d.getHours())}.${two(d.getMinutes())}.${two(d.getSeconds())}`; }
-  function updateDateTime(){
-    const now = new Date();
-    const dayName = now.toLocaleDateString('en-US',{weekday:'long'});
-    const monthName = now.toLocaleDateString('en-US',{month:'long'});
-    const date = String(now.getDate()).padStart(2,'0');
-    const year = now.getFullYear();
-    dateEl.textContent = `${dayName}, ${date} ${monthName} ${year}`;
-    timeEl.textContent = formatTimeDot(now);
+/* ============== utilities ============== */
+const card = document.getElementById('card-quote');
+const media = document.getElementById('card-media');
+const content = card.querySelector('.card-content');
+const btnHappy = document.getElementById('btn-happy');
+const btnTired = document.getElementById('btn-tired');
+const btnSad = document.getElementById('btn-sad');
+
+function two(n){return String(n).padStart(2,'0')}
+function formatTimeDot(d){return `${two(d.getHours())}.${two(d.getMinutes())}.${two(d.getSeconds())}`}
+
+const dateEl = document.getElementById('dateText');
+const timeEl = document.getElementById('timeText');
+function updateDateTime(){const now=new Date(); dateEl.textContent = `${now.toLocaleDateString('en-US',{weekday:'long'})}, ${String(now.getDate()).padStart(2,'0')} ${now.toLocaleDateString('en-US',{month:'long'})} ${now.getFullYear()}`; timeEl.textContent = formatTimeDot(now)}
+updateDateTime(); setInterval(updateDateTime,1000);
+
+function todayIdx(){return new Date().getDay()}
+
+/* decorative backgrounds per mood */
+const mediaMap = {
+  happy: 'linear-gradient(180deg, rgba(255,190,120,0.10), rgba(255,230,150,0.04)), linear-gradient(120deg,#ffd6eb,#e9d4ff)',
+  tired: 'linear-gradient(180deg, rgba(20,20,20,0.16), rgba(255,255,255,0.02)), linear-gradient(120deg,#e9f7ff,#f5eafc)',
+  sad: 'linear-gradient(180deg, rgba(4,12,30,0.14), rgba(255,255,255,0.02)), linear-gradient(120deg,#d6faff,#f3e9ff)'
+};
+
+/* create moving text while preserving spaces */
+function createMovingText(text, moodClass){
+  // clear
+  const wrapper = document.createElement('div');
+  wrapper.className = 'moving-text float-loop ' + moodClass;
+  // split into array of characters using spread (handles surrogate pairs)
+  const chars = [...text];
+  for(let i=0;i<chars.length;i++){
+    const ch = chars[i];
+    const span = document.createElement('span');
+    span.className = 'char';
+    // use regular space in text content but set white-space:pre on spans so sequences okay
+    span.textContent = (ch === ' ') ? '\u00A0' : ch;
+    span.style.animationDelay = (i * parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--char-delay') || 0.028)) + 's';
+    wrapper.appendChild(span);
   }
-  updateDateTime();
-  setInterval(updateDateTime,1000);
+  return wrapper;
+}
 
-  /* =============== media backgrounds (decorative) =============== */
-  const mediaMap = {
-    happy: 'linear-gradient(180deg, rgba(255,190,120,0.10), rgba(255,230,150,0.04)), linear-gradient(120deg,#ffd6eb,#e9d4ff)',
-    tired: 'linear-gradient(180deg, rgba(20,20,20,0.16), rgba(255,255,255,0.02)), linear-gradient(120deg,#e9f7ff,#f5eafc)',
-    sad: 'linear-gradient(180deg, rgba(4,12,30,0.14), rgba(255,255,255,0.02)), linear-gradient(120deg,#d6faff,#f3e9ff)'
-  };
+/* populate the single card with given mood and text */
+function populateCard(mood, text){
+  // set background
+  media.style.background = mediaMap[mood] || mediaMap.happy;
+  media.style.backgroundSize = 'cover';
+  media.style.backgroundPosition = 'center';
 
-  /* =============== create moving text element (preserve spaces) =============== */
-  function createMovingTextElement(text, moodClass){
-    // wrapper
-    const wrapper = document.createElement('div');
-    wrapper.className = 'moving-text float-loop ' + moodClass;
+  // create moving text
+  content.innerHTML = '';
+  const moodClass = mood === 'happy' ? 'text-happy' : (mood === 'tired' ? 'text-tired' : 'text-sad');
+  const moving = createMovingText(text, moodClass);
+  content.appendChild(moving);
+  // ensure card hidden initially
+  card.setAttribute('aria-hidden','true');
+}
 
-    // we'll create per-character spans, but spaces must be NBSP inside span so they render width/wrapping properly
-    // using spread operator for proper grapheme clusters (EMOJI ok in modern browsers)
-    const chars = [...text];
-    chars.forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.className = 'char';
-      // replace normal space ' ' with non-breaking space to ensure span has width,
-      // but keep ability to wrap: we allow the spans to wrap since each span is inline-block;
-      // when many consecutive spaces occur, this still preserves spacing.
-      span.textContent = (ch === ' ') ? '\u00A0' : ch;
-      // animation delay per char
-      const delay = i * parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--char-delay') || 0.028);
-      span.style.animationDelay = `${delay}s`;
-      wrapper.appendChild(span);
-    });
-    return wrapper;
-  }
+/* toggle logic: open single card, restart char animation */
+function closeCard(){
+  card.classList.remove('show');
+  card.setAttribute('aria-hidden','true');
+  document.querySelectorAll('.mood-btn').forEach(b=>b.setAttribute('aria-expanded','false'));
+}
+function openCard(){
+  // restart animations by forcing no-animation then reflow
+  card.querySelectorAll('.char').forEach(el=> el.style.animation = 'none');
+  setTimeout(()=> {
+    card.querySelectorAll('.char').forEach(el=> el.style.animation = '');
+  },20);
+  card.classList.add('show');
+  card.setAttribute('aria-hidden','false');
+}
 
-  /* =============== populate cards with today's quote =============== */
-  function todayIdx(){ return new Date().getDay(); }
-  function placeQuotes(){
-    const idx = todayIdx();
-    const happyText = HAPPY[idx] || HAPPY[0];
-    const tiredText = TIRED[idx] || TIRED[0];
-    const sadText   = SAD[idx]   || SAD[0];
+/* button handlers */
+btnHappy.addEventListener('click', ()=> {
+  const idx = todayIdx();
+  populateCard('happy', HAPPY[idx] || HAPPY[0]);
+  closeCard(); // ensure reset
+  setTimeout(openCard, 10);
+  btnHappy.setAttribute('aria-expanded','true');
+});
+btnTired.addEventListener('click', ()=> {
+  const idx = todayIdx();
+  populateCard('tired', TIRED[idx] || TIRED[0]);
+  closeCard();
+  setTimeout(openCard, 10);
+  btnTired.setAttribute('aria-expanded','true');
+});
+btnSad.addEventListener('click', ()=> {
+  const idx = todayIdx();
+  populateCard('sad', SAD[idx] || SAD[0]);
+  closeCard();
+  setTimeout(openCard, 10);
+  btnSad.setAttribute('aria-expanded','true');
+});
 
-    // prepare cards
-    populateCard('q-happy','media-happy', happyText, 'text-happy');
-    populateCard('q-tired','media-tired', tiredText, 'text-tired');
-    populateCard('q-sad','media-sad', sadText, 'text-sad');
-  }
+/* midnight refresh to re-place quotes (keeps daily behavior) */
+(function scheduleMidnight(){
+  const now = new Date();
+  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1,0,0,1);
+  const ms = next - now;
+  setTimeout(()=> { /* if card open, close it; repopulate next day */
+    closeCard();
+    // nothing to change until user clicks; but we can re-populate with new day's text if needed
+    scheduleMidnight();
+  }, ms);
+})();
 
-  function populateCard(cardId, mediaId, text, moodClass){
-    const card = document.getElementById(cardId);
-    const media = document.getElementById(mediaId);
-    // set decorative background
-    const key = mediaId.split('-')[1];
-    media.style.background = mediaMap[key] || mediaMap['happy'];
-    media.style.backgroundSize = 'cover';
-    media.style.backgroundRepeat = 'no-repeat';
-    media.style.backgroundPosition = 'center';
+/* optional: open happy by default for preview - comment out if not wanted */
+ // btnHappy.click();
 
-    const content = card.querySelector('.card-content');
-    content.innerHTML = ''; // clear existing
-    // create moving text with mood class for color
-    const moving = createMovingTextElement(text, moodClass);
-    content.appendChild(moving);
-    // ensure aria
-    card.setAttribute('aria-hidden','true');
-  }
-
-  placeQuotes();
-
-  /* =============== toggle logic: only one open at a time =============== */
-  function setupToggle(btnId, quoteId){
-    const btn = document.getElementById(btnId);
-    const q = document.getElementById(quoteId);
-
-    function closeAll(){
-      document.querySelectorAll('.quote.show').forEach(el=>{
-        el.classList.remove('show');
-        el.setAttribute('aria-hidden','true');
-      });
-      document.querySelectorAll('.mood-btn').forEach(b=> b.setAttribute('aria-expanded','false'));
-    }
-
-    function openCard(){
-      // restart char animations by forcing reflow and reapplying animation
-      q.querySelectorAll('.char').forEach((el)=>{
-        el.style.animation = 'none';
-      });
-      // small timeout to let DOM update
-      setTimeout(()=>{
-        q.querySelectorAll('.char').forEach((el)=>{
-          el.style.animation = '';
-        });
-      }, 30);
-      q.classList.add('show');
-      q.setAttribute('aria-hidden','false');
-      btn.setAttribute('aria-expanded','true');
-      if(window.innerWidth < 760){
-        q.scrollIntoView({behavior:'smooth', block:'center'});
-      }
-    }
-
-    function toggle(){
-      const isShown = q.classList.contains('show');
-      closeAll();
-      if(!isShown) openCard();
-    }
-
-    btn.addEventListener('click', (e)=>{ e.preventDefault(); toggle(); });
-    btn.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); } });
-  }
-
-  setupToggle('btn-happy','q-happy');
-  setupToggle('btn-tired','q-tired');
-  setupToggle('btn-sad','q-sad');
-
-  /* =============== Midnight refresh (repopulate quotes daily) =============== */
-  (function scheduleMidnight(){
-    const now = new Date();
-    const next = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 0, 1);
-    const ms = next - now;
-    setTimeout(()=> {
-      placeQuotes();
-      document.querySelectorAll('.quote.show').forEach(el=> el.classList.remove('show'));
-      document.querySelectorAll('.mood-btn').forEach(b=> b.setAttribute('aria-expanded','false'));
-      scheduleMidnight();
-    }, ms);
-  })();
-
-  /* =============== emoji jitter & visual tweaks =============== */
-  (function visualInit(){
-    document.querySelectorAll('.emoji').forEach((el,i)=>{
-      const base = 12 + Math.random()*14; // 12-26s
-      el.style.animationDuration = base + 's';
-      el.style.animationDelay = (i*0.6) + 's';
-      // small jitter for left/top if set
-      if(el.style.left){
-        const left = parseFloat(el.style.left);
-        el.style.left = Math.max(1, Math.min(96, left + (Math.random()-0.5)*6)) + '%';
-      }
-      if(el.style.top){
-        const top = parseFloat(el.style.top);
-        el.style.top = Math.max(1, Math.min(96, top + (Math.random()-0.5)*6)) + '%';
-      }
-    });
-  })();
-
-  /* =============== optional: auto-open first mood for recording (commented) =============== */
-  // document.getElementById('btn-happy').click();
-
-  /* =================== DONE =================== */
-  </script>
+</script>
 </body>
 </html>
-
