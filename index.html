@@ -1,198 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>For My Love 💌</title>
+
+<!--
+  Full single-file dashboard:
+  - Keeps original styling & layout you wanted
+  - Adds "message" input under quote box
+  - "Send to WhatsApp" opens WhatsApp with prefilled message to number: 62895346170808
+  - Mobile-first, responsive, no external deps
+-->
+
 <style>
-  * {
-    box-sizing: border-box;
+  /* ===== base & reset ===== */
+  :root{
+    --bg-a:#dff7ff; --bg-b:#f3e7ff;
+    --accent:#4a0072;
+    --card-a:#ffe5f1; --card-b:#dff6ff;
+    --btn-border:#c5b5ff;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    background: linear-gradient(135deg,var(--bg-a),var(--bg-b));
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:20px; color:#2b1055; min-height:100vh;
   }
 
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #dff7ff, #f3e7ff);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    color: #2b1055;
-    padding: 20px;
+  /* ===== header/time/title ===== */
+  header{ text-align:center; z-index:1; width:100%; max-width:540px; }
+  #date{ color:var(--accent); font-weight:600; font-size:1rem; }
+  #time{ margin-top:6px; color:#3b006a; font-weight:700; font-size:2rem; }
+  h1.title{ margin-top:10px; font-size:1.05rem; font-weight:700; color:#2b1055; }
+
+  /* ===== buttons ===== */
+  .btn-group{ display:flex; gap:14px; margin-top:18px; justify-content:center; flex-wrap:wrap; width:100%; max-width:540px; }
+  .mood-btn{
+    background:#fff; border:2px solid var(--btn-border); border-radius:14px;
+    padding:10px 22px; font-weight:600; color:var(--accent); cursor:pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s;
+  }
+  .mood-btn:hover{ transform:translateY(-3px); box-shadow:0 10px 24px rgba(75,10,120,0.08); background:#fbf5ff; }
+
+  /* ===== quote box ===== */
+  .quote-box{
+    margin-top:22px; width:90%; max-width:420px;
+    background: linear-gradient(145deg,var(--card-a),var(--card-b));
+    border-radius:var(--radius); padding:25px 20px; min-height:200px;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1); overflow:visible;
+  }
+  .quote-text{
+    font-size:1.05rem; font-weight:500; color:#111;
+    line-height:1.65; white-space:normal; word-break:normal; overflow-wrap:anywhere; text-align:center;
   }
 
-  h1, h2, h3 {
-    margin: 5px 0;
-    text-align: center;
-    word-wrap: break-word;
+  /* ===== message input (new) ===== */
+  .message-wrap{
+    margin-top:18px; width:90%; max-width:420px; display:flex; flex-direction:column; gap:10px;
   }
-
-  .time {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #3b006a;
+  .message-box{
+    background: #fff; border-radius:14px; padding:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    display:flex; gap:8px; align-items:flex-start;
   }
-
-  .quote-box {
-    background: linear-gradient(145deg, #ffe5f1, #dff6ff);
-    border-radius: 20px;
-    padding: 25px 20px;
-    text-align: center;
-    width: 90%;
-    max-width: 420px;
-    min-height: 200px;
-    line-height: 1.7;
-    margin-top: 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+  textarea#msg{
+    resize:vertical; min-height:72px; max-height:200px; width:100%;
+    border:1px solid rgba(0,0,0,0.06); border-radius:10px; padding:10px;
+    font-family:inherit; font-size:1rem; line-height:1.4;
   }
-
-  .quote-text {
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: #111; /* Warna lebih kuat dan solid */
-    white-space: normal;
-    text-align: center;
+  .actions{ display:flex; gap:10px; align-items:center; justify-content:flex-end; margin-top:4px; }
+  .send-btn{
+    background: linear-gradient(180deg,#ffffff,#fbf5ff); border:2px solid var(--btn-border);
+    padding:10px 16px; border-radius:12px; font-weight:700; color:var(--accent); cursor:pointer;
+    box-shadow:0 8px 20px rgba(80,30,110,0.06);
   }
+  .send-btn:disabled{ opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
 
-  .btn-group {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  /* ===== footer ===== */
+  footer{ margin-top:18px; font-size:0.95rem; color:#333; text-align:center; }
 
-  button {
-    background: white;
-    border: 2px solid #c5b5ff;
-    border-radius: 14px;
-    padding: 10px 24px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    color: #4a0072;
-    transition: all 0.25s ease;
-  }
+  /* ===== animation class for quote ===== */
+  .fade-in { animation: fadeIn .6s ease both; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px)} to { opacity:1; transform:translateY(0)} }
 
-  button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  }
-
-  footer {
-    margin-top: 35px;
-    font-size: 0.95rem;
-    color: #333;
-    text-align: center;
-  }
-
-  /* Animation */
-  .fade-in {
-    animation: fadeIn 0.8s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Responsiveness */
-  @media (max-width: 480px) {
-    body {
-      padding: 15px;
-    }
-    .time {
-      font-size: 1.6rem;
-    }
-    .quote-box {
-      width: 100%;
-      min-height: 220px;
-      padding: 20px 15px;
-    }
-    .quote-text {
-      font-size: 1rem;
-    }
+  /* ===== responsive tweaks ===== */
+  @media(max-width:480px){
+    #time{ font-size:1.6rem; }
+    .quote-box{ min-height:220px; padding:20px 15px; }
+    .quote-text{ font-size:1rem; }
+    textarea#msg{ min-height:88px; }
   }
 </style>
 </head>
 <body>
 
-  <h3 id="date"></h3>
-  <h2 class="time" id="time"></h2>
-  <h1>open this when you feel</h1>
+  <!-- HEADER: date + time + title -->
+  <header aria-labelledby="mainTitle">
+    <p id="date" aria-live="polite">loading date</p>
+    <h2 id="time" class="time" aria-live="polite">00:00:00</h2>
+    <h1 id="mainTitle" class="title">open this when you feel</h1>
+  </header>
 
-  <div class="btn-group">
-    <button onclick="showQuote('happy')">happy</button>
-    <button onclick="showQuote('tired')">tired</button>
-    <button onclick="showQuote('sad')">sad</button>
+  <!-- MOOD BUTTONS (same as before) -->
+  <div class="btn-group" role="group" aria-label="mood buttons">
+    <button class="mood-btn" id="btn-happy" type="button">happy</button>
+    <button class="mood-btn" id="btn-tired" type="button">tired</button>
+    <button class="mood-btn" id="btn-sad" type="button">sad</button>
   </div>
 
-  <div class="quote-box">
+  <!-- QUOTE BOX -->
+  <div class="quote-box" id="quoteBox" role="region" aria-live="polite">
     <p id="quote" class="quote-text">✨ select how you feel above ✨</p>
   </div>
 
+  <!-- NEW: MESSAGE INPUT + SEND TO WHATSAPP -->
+  <div class="message-wrap" aria-label="send message section">
+    <!-- visual message container -->
+    <div class="message-box">
+      <textarea id="msg" aria-label="Type your message" placeholder="Type your message here..."></textarea>
+    </div>
+
+    <!-- actions: send button -->
+    <div class="actions" style="width:100%; max-width:420px;">
+      <button id="sendBtn" class="send-btn" disabled type="button" aria-disabled="true">Send to WhatsApp</button>
+    </div>
+  </div>
+
+  <!-- FOOTER remains after the message box -->
   <footer>made with love, for the one i love 💌</footer>
 
 <script>
-  const quotes = {
-    happy: [
-      "You woke up today with that quiet joy, the kind that doesn’t need a reason. Just knowing you’re here makes everything feel lighter. ILY, sayang.",
-      "Even in small moments, like the sun on your face or the smell of coffee, I know you smile because something warm crosses your thoughts. I miss you, my love.",
-      "You laughed today, and for a second, it felt like the world paused just to let you feel that happiness. I love seeing you like that, cintaku.",
-      "Your presence has this calm energy, even chaos turns gentle when you’re around. You’re my peace, semestaku hihi.",
-      "You probably caught yourself daydreaming again, and those simple thoughts hold more warmth than a thousand perfect days. I love you endlessly, sayang.",
-      "The little things, your laugh, a glance, the way you say my name, fill every moment with quiet magic. You’re my favorite part of every day, cintaku yang gemas nan lucu.",
-      "By the end of today, I hope you remember that happiness isn’t about what happens around you, but about the love you carry in your heart. And my love will always be there too."
-    ],
-    tired: [
-      "I know you’re tired in ways words can’t really explain, your body wants to rest, but your mind won’t stop. Rest easy, sayang, I’m always here for you. I love you.",
-      "Even the smallest things feel heavy sometimes, and I know you keep wondering how you’ll get through the day. You don’t have to face it alone, cintaku. I’m with you.",
-      "I can see the exhaustion behind your eyes, that quiet weight you carry without ever saying a word. I wish I could hold you now, sayang, and let you rest.",
-      "Every step takes double the energy, yet you still keep going. That’s strength, even when it doesn’t feel like it. I’m proud of you, semestaku. I love you.",
-      "There’s a heaviness in you today that no smile or coffee can fix, and that’s okay. It’s just one of those days. Let me be your calm, my love.",
-      "You’ve been stretched thin between what you need and what you have to do, I hope you find a moment to breathe. I’m right here, sayang, holding you in my heart.",
-      "By tonight, I know you’re not just physically tired, but emotionally drained too. I wish I could help you rest from the inside out. I love you, always."
-    ],
-    sad: [
-      "I know there’s an emptiness in you today, a hollow space where happiness used to be, and no one else seems to notice. But I do, sayang. I love you more than words.",
-      "Even when you laugh, I can tell it’s a little borrowed, like you’re trying to hide that quiet weight in your chest. I see you, cintaku, and I’ll never stop loving you.",
-      "There are moments you just want to disappear, not because you want to give up, but because everything feels so heavy. I’ll stay with you through it all, my love.",
-      "You sit in silence, and I know those memories still echo softly in places no one else can see. I’m here, sayang, holding you with my heart.",
-      "Sometimes tears just fall, uninvited, and that’s okay. Holding them back would only hurt more. Let them fall, I’ll be here to wipe them away. Love you sayaangg.",
-      "I notice the small cracks, the parts of you that ache even when you’re surrounded by people. I love all of you, sayang, even the quiet pain you hide.",
-      "By night, when you lie awake, I know that sadness wraps around you like a blanket you never asked for. But I’ll be your warmth, my love, until you feel light again."
-    ]
-  };
+/* ================== DATA: quotes (unchanged) ================== */
+const quotes = {
+  happy: [
+    "You woke up today with that quiet joy, the kind that doesn’t need a reason. Just knowing you’re here makes everything feel lighter. ILY, sayang.",
+    "Even in small moments, like the sun on your face or the smell of coffee, I know you smile because something warm crosses your thoughts. I miss you, my love.",
+    "You laughed today, and for a second, it felt like the world paused just to let you feel that happiness. I love seeing you like that, cintaku.",
+    "Your presence has this calm energy, even chaos turns gentle when you’re around. You’re my peace, semestaku hihi.",
+    "You probably caught yourself daydreaming again, and those simple thoughts hold more warmth than a thousand perfect days. I love you endlessly, sayang.",
+    "The little things — your laugh, a glance, the way you say my name — fill every moment with quiet magic. You’re my favorite part of every day, cintaku yang gemas nan lucu.",
+    "By the end of today, I hope you remember that happiness isn’t about what happens around you, but about the love you carry in your heart. And my love will always be there too."
+  ],
+  tired: [
+    "I know you’re tired in ways words can’t really explain, your body wants to rest, but your mind won’t stop. Rest easy, sayang, I’m always here for you. I love you.",
+    "Even the smallest things feel heavy sometimes, and I know you keep wondering how you’ll get through the day. You don’t have to face it alone, cintaku. I’m with you.",
+    "I can see the exhaustion behind your eyes, that quiet weight you carry without ever saying a word. I wish I could hold you now, sayang, and let you rest.",
+    "Every step takes double the energy, yet you still keep going. That’s strength, even when it doesn’t feel like it. I’m proud of you, semestaku. I love you.",
+    "There’s a heaviness in you today that no smile or coffee can fix, and that’s okay. It’s just one of those days. Let me be your calm, my love.",
+    "You’ve been stretched thin between what you need and what you have to do, I hope you find a moment to breathe. I’m right here, sayang, holding you in my heart.",
+    "By tonight, I know you’re not just physically tired, but emotionally drained too. I wish I could help you rest from the inside out. I love you, always."
+  ],
+  sad: [
+    "I know there’s an emptiness in you today, a hollow space where happiness used to be, and no one else seems to notice. But I do, sayang. I love you more than words.",
+    "Even when you laugh, I can tell it’s a little borrowed, like you’re trying to hide that quiet weight in your chest. I see you, cintaku, and I’ll never stop loving you.",
+    "There are moments you just want to disappear, not because you want to give up, but because everything feels so heavy. I’ll stay with you through it all, my love.",
+    "You sit in silence, and I know those memories still echo softly in places no one else can see. I’m here, sayang, holding you with my heart.",
+    "Sometimes tears just fall, uninvited, and that’s okay. Holding them back would only hurt more. Let them fall, I’ll be here to wipe them away. Love you sayaangg.",
+    "I notice the small cracks, the parts of you that ache even when you’re surrounded by people. I love all of you, sayang, even the quiet pain you hide.",
+    "By night, when you lie awake, I know that sadness wraps around you like a blanket you never asked for. But I’ll be your warmth, my love, until you feel light again."
+  ]
+};
 
-  function showQuote(mood) {
-    const q = document.getElementById('quote');
-    const randomQuote = quotes[mood][Math.floor(Math.random() * quotes[mood].length)];
-    q.textContent = randomQuote;
-    q.className = 'quote-text fade-in';
+/* ================== CLOCK & DATE (real-time) ================== */
+const dateEl = document.getElementById('date');
+const timeEl = document.getElementById('time');
 
-    // Warna teks full opacity & jelas
-    if (mood === 'happy') q.style.color = '#d89a00';
-    if (mood === 'tired') q.style.color = '#1a1a1a';
-    if (mood === 'sad') q.style.color = '#0b3d91';
+function two(n){ return String(n).padStart(2,'0'); }
+function formatTime(d){ return `${two(d.getHours())}:${two(d.getMinutes())}:${two(d.getSeconds())}`; }
+
+function updateClock(){
+  const now = new Date();
+  const dayName = now.toLocaleDateString('en-GB', { weekday: 'long' });
+  const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  dateEl.textContent = `${dayName} ${dateStr}`;
+  timeEl.textContent = formatTime(now);
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ================== QUOTE LOGIC (unchanged look & behavior) ================== */
+const quoteEl = document.getElementById('quote');
+const quoteBox = document.getElementById('quoteBox');
+const btnHappy = document.getElementById('btn-happy');
+const btnTired = document.getElementById('btn-tired');
+const btnSad = document.getElementById('btn-sad');
+
+function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+/* restart CSS animation cleanly */
+function restartAnimation(el, cls){
+  el.classList.remove(cls);
+  // force reflow to restart animation
+  void el.offsetWidth;
+  el.classList.add(cls);
+}
+
+/* set color per mood */
+function setMoodColor(el, mood){
+  if(mood === 'happy') el.style.color = '#d89a00';
+  else if(mood === 'tired') el.style.color = '#1a1a1a';
+  else if(mood === 'sad') el.style.color = '#0b3d91';
+}
+
+/* show quote */
+function showQuote(mood){
+  const text = pickRandom(quotes[mood]);
+  quoteEl.textContent = text;
+  setMoodColor(quoteEl, mood);
+  restartAnimation(quoteBox, 'fade-in');
+}
+
+/* attach event listeners to buttons */
+btnHappy.addEventListener('click', ()=> showQuote('happy'));
+btnTired.addEventListener('click', ()=> showQuote('tired'));
+btnSad.addEventListener('click', ()=> showQuote('sad'));
+
+/* ================== MESSAGE -> WHATSAPP ================== */
+/*
+  Behavior:
+  - User types message into textarea #msg
+  - Button Send to WhatsApp opens WhatsApp with prefilled text for the number below
+  - On mobile: attempts whatsapp://send?phone=...&text=... (opens app)
+  - On desktop: opens https://web.whatsapp.com/send?phone=...&text=...
+  - Button disabled when textarea empty
+*/
+
+const phoneNumber = '62895346170808'; // your number in international format (no +)
+const msgEl = document.getElementById('msg');
+const sendBtn = document.getElementById('sendBtn');
+
+function updateSendButtonState(){
+  const val = msgEl.value.trim();
+  if(val.length === 0){
+    sendBtn.disabled = true;
+    sendBtn.setAttribute('aria-disabled','true');
+  } else {
+    sendBtn.disabled = false;
+    sendBtn.setAttribute('aria-disabled','false');
   }
+}
 
-  // Jam dan tanggal realtime
-  function updateTime() {
-    const now = new Date();
-    const time = now.toLocaleTimeString('en-GB');
-    const date = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    document.getElementById('time').textContent = time;
-    document.getElementById('date').textContent = date;
+// initial state
+updateSendButtonState();
+msgEl.addEventListener('input', updateSendButtonState);
+
+// function to open WhatsApp (mobile app when possible, otherwise web)
+function openWhatsAppMessage(number, text){
+  const encoded = encodeURIComponent(text);
+
+  // Try mobile deep link first
+  const mobileUrl = `whatsapp://send?phone=${number}&text=${encoded}`;
+
+  // Fallback web URL (works on desktop and mobile browsers)
+  const webUrl = `https://web.whatsapp.com/send?phone=${number}&text=${encoded}`;
+
+  // Another commonly used URL that works across devices
+  const apiUrl = `https://api.whatsapp.com/send?phone=${number}&text=${encoded}`;
+
+  // Try to open mobile URL first; if it fails (browser blocks), open web URL in new tab
+  // Note: we cannot reliably detect if mobile URL failed after calling window.location,
+  // so use userAgent heuristic: if on mobile, try whatsapp:// then fallback to apiUrl.
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if(isMobile){
+    // attempt to open app via location change (this will open app if installed)
+    // open in new tab/window to be safer on some browsers
+    const newWindow = window.open(mobileUrl, '_blank');
+    // If window.open returned null (popup blocked), try apiUrl
+    if(!newWindow){
+      window.open(apiUrl, '_blank');
+    }
+    // Note: even if mobileUrl is opened and WhatsApp app handles it, some browsers may still keep this page active.
+  } else {
+    // Desktop: open WhatsApp Web (web.whatsapp.com or api)
+    // Prefer web.whatsapp for desktop; api also works.
+    window.open(webUrl, '_blank');
   }
-  setInterval(updateTime, 1000);
-  updateTime();
+}
+
+// click handler for send button
+sendBtn.addEventListener('click', ()=> {
+  const text = msgEl.value.trim();
+  if(text.length === 0) return;
+  // Optional: append an attribution or note (disabled by default)
+  // const fullText = `${text}\n\n(sent from my love-quote page)`;
+  const fullText = text;
+
+  // For safety, open the link via function
+  openWhatsAppMessage(phoneNumber, fullText);
+
+  // Visual feedback: briefly clear field and disable button (we keep content for safety)
+  // Optionally, you can clear after sending: uncomment next two lines if desired:
+  // msgEl.value = '';
+  // updateSendButtonState();
+});
+
+/* ================== END ================== */
 </script>
 
 </body>
